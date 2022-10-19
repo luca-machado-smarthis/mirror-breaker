@@ -49,7 +49,7 @@ class Level:
                     player.rect.left = sprite.rect.right
                 elif player.direction.x > 0:
                     player.rect.right = sprite.rect.left
-
+#teste
     def vertical_movement_collision(self):
         player = self.player.sprite
         player.apply_gravity()
