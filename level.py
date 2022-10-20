@@ -39,32 +39,47 @@ class Level:
             self.world_shift = 0
             player.speed = 8
 
-    def horizontal_movement_collision(self):
-        player = self.player.sprite
-        player.rect.x += player.direction.x * player.speed
-
-        for sprite in self.tiles.sprites():
-            if sprite.rect.colliderect(player.rect):
-                if player.direction.x < 0: # melhor forma de ver com o que se está colidindo
-                    player.rect.left = sprite.rect.right
-                elif player.direction.x > 0:
-                    player.rect.right = sprite.rect.left
-#teste
     def vertical_movement_collision(self):
         player = self.player.sprite
         player.apply_gravity()
 
-        for sprite in self.tiles.sprites(): #todo adicionar slow fall quando agarrado na parede
-                                            #todo adicionar wallJUmp
+        for sprite in self.tiles.sprites():  #todo adicionar wallJUmp
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y < 0: # melhor forma de ver com o que se está colidindo
                     player.rect.top = sprite.rect.bottom
                     player.reset_vertical_momentum()
                 elif player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
-                    player.reset_vertical_momentum()
                     player.can_jump = True
+                    player.reset_vertical_momentum()
 
+    def horizontal_movement_collision(self):
+        player = self.player.sprite
+        player.rect.x += player.direction.x * player.speed
+        player.gravity = 0.8
+        player.can_wall_jump = False
+
+        for sprite in self.tiles.sprites():
+            if sprite.rect.colliderect(player.rect):
+                if player.direction.x < 0: # melhor forma de ver com o que se está colidindo
+                    player.rect.left = sprite.rect.right
+                    self.vertical_movement_collision()
+                    player.gravity = 0.3
+                    player.reset_vertical_momentum()
+                    player.can_wall_jump = True
+                    player.wall_jump_direction = 6
+                elif player.direction.x > 0:
+                    player.rect.right = sprite.rect.left
+                    self.vertical_movement_collision()
+                    player.gravity = 0.3
+                    player.reset_vertical_momentum()
+                    player.can_wall_jump = True
+                    player.wall_jump_direction = -6
+
+
+    def player_movement(self):
+        self.horizontal_movement_collision()
+        self.vertical_movement_collision()
 
     def run(self):
         for event in pygame.event.get():
@@ -76,6 +91,5 @@ class Level:
         self.scroll_x()
 
         self.player.update()
-        self.horizontal_movement_collision()
-        self.vertical_movement_collision()
+        self.player_movement()
         self.player.draw(self.display_surface)
