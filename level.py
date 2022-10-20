@@ -56,7 +56,6 @@ class Level:
 
         for sprite in self.tiles.sprites(): #todo adicionar slow fall quando agarrado na parede
                                             #todo adicionar wallJUmp
-                                            #todo limitar os pulos
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y < 0: # melhor forma de ver com o que se está colidindo
                     player.rect.top = sprite.rect.bottom
@@ -64,9 +63,14 @@ class Level:
                 elif player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
                     player.reset_vertical_momentum()
+                    player.can_jump = True
 
 
     def run(self):
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    print("buga")
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.display_surface)
         self.scroll_x()
