@@ -59,7 +59,7 @@ class Level:
         player.gravity = 0.8
         player.can_wall_jump = False
 
-        for sprite in self.tiles.sprites():
+        for sprite in self.tiles.sprites(): #todo consertar walljump após saber usar temporizador
             if sprite.rect.colliderect(player.rect):
                 if player.direction.x < 0: # melhor forma de ver com o que se está colidindo
                     player.rect.left = sprite.rect.right
