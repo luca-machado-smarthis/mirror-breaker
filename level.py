@@ -75,3 +75,6 @@ class Level:
         self.horizontal_movement_collision()
         self.vertical_movement_collision()
         self.player.draw(self.display_surface)
+
+
+    #De vez enquando da um glitch no player onde ele teleporta, não sei pq    

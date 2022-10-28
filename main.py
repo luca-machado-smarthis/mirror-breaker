@@ -6,17 +6,23 @@ from menu import Menu
 
 class Game:
     def __init__(self):
-        self.level = Level(level_data=level_map, surface=screen)
-        self.menu = Menu(screen, self.create_level, self.create_select)
+        
+        self.menu = Menu(screen, self.create_level, self.create_lselect)
+        self.status = 'menu'
     
     def create_level(self):
-        print('funciona')
+        self.level = Level(level_data=level_map, surface=screen)
+        self.status = 'level'
 
-    def create_select(self):
+    def create_lselect(self):
         print('funciona2')
+        #ToDo fazer classe level select
 
     def run(self):
-        self.menu.run(not(can_click))
+        if self.status == 'menu':
+            self.menu.run(not(can_click))
+        else:
+            self.level.run()
 
 pygame.init()
 
