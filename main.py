@@ -7,10 +7,16 @@ from menu import Menu
 class Game:
     def __init__(self):
         self.level = Level(level_data=level_map, surface=screen)
-        self.menu = Menu(screen)
+        self.menu = Menu(screen, self.create_level, self.create_select)
     
+    def create_level(self):
+        print('funciona')
+
+    def create_select(self):
+        print('funciona2')
+
     def run(self):
-        self.menu.run()
+        self.menu.run(not(can_click))
 
 pygame.init()
 
@@ -26,7 +32,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == pygame.MOUSEBUTTONDOWN and can_click:
+        if (event.type == pygame.MOUSEBUTTONDOWN):
             can_click = False
         if event.type == pygame.MOUSEBUTTONUP:
             can_click = True
