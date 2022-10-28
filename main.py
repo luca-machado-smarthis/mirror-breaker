@@ -10,7 +10,7 @@ class Game:
         self.menu = Menu(screen)
     
     def run(self):
-        self.menu.run(not(can_click))
+        self.menu.run()
 
 pygame.init()
 

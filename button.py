@@ -1,16 +1,16 @@
 import pygame
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self, image_fade, image_full, position, action):
+    def __init__(self, image_fade, image_full, position):
         super().__init__()
         
         self.image_full = pygame.image.load(image_full).convert_alpha()
         self.image_fade = pygame.image.load(image_fade).convert_alpha()
-        self.image = image_fade
+        self.image = self.image_fade
 
-        self.rect = self.image.get_rect(center = position)
+        self.rect = self.image.get_rect(topleft = position)
 
-        self.action = action
+        
 
     def collision_mice(self):
         mouse_pos = pygame.mouse.get_pos()
@@ -19,10 +19,10 @@ class Button(pygame.sprite.Sprite):
         else:
             return False
 
-    def update(self, click):
+
+
+    def update(self):
         if self.collision_mice():
             self.image = self.image_full
-            if click:
-                self.action
         else:
             self.image = self.image_fade
