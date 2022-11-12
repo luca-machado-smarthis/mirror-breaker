@@ -3,15 +3,18 @@ import pygame
 from player import Player
 from setting import *
 from tiles import Tile
+from setting import level_maps
 
 class Level:
-    def __init__(self, level_data, surface):
+    def __init__(self, surface, create_menu, level_number):
         # level set_up
         self.display_surface = surface
+        self.create_menu = create_menu # Depois usar para retornar ao menu
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()  # sempre cria um grupo (mesmo que solitário) e depois instancia e  adiciona
         self.world_shift = 0
-        self.setup_level(level_data)  # pode já executar uma função quando instancia ISSO TEM QUE SER SEMPRE NO FINAL
+        self.level_number = level_number#Depois tem que fazer com que possa ao fazer o level_data baseado nesse number
+        self.setup_level(level_maps[level_number])  # pode já executar uma função quando instancia ISSO TEM QUE SER SEMPRE NO FINAL
         # pois pode dar problema com o que vier antes
 
     def setup_level(self, layout):
