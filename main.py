@@ -12,20 +12,22 @@ class Game:
         self.status = 'menu'
     
     def create_level(self, level):
-        self.level = Level(screen, self.create_menu, level)
+        self.level = Level(screen, self.create_menu, self.create_level, level)
         self.status = 'level'
 
     def create_menu(self, max_level):
         print("teste")
-        #ToDo
+        #ToDo so serve pra caso queira voltar do level ou level_select ao menu
 
     def create_lselect(self, max_level):
-        print('funciona2')
-        #ToDo fazer classe level select
+        self.lselect = LevelSelect(screen, self.create_level, self.create_menu, max_level)
+        self.status = 'level_select'
 
     def run(self):
         if self.status == 'menu':
             self.menu.run(can_click)
+        elif self.status == 'level_select':
+            self.lselect.run(can_click)
         else:
             self.level.run()
 

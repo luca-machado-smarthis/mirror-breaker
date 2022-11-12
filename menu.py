@@ -10,7 +10,8 @@ class Menu:
 
         self.max_level = max_level
 
-        #depois tem que posicionar onde quiser 
+        #depois tem que posicionar onde quiser
+        #Daria para adicionar um botão continu que continua do max_level 
         self.buttons.add(Button('assets/playButton_fade.png', 'assets/playButton_full.png', (0,0), create_level, 0))#Jogar
         self.buttons.add(Button('assets/levelButton_fade.png', 'assets/levelButton_full.png', (300,0), create_lselect, max_level))#Level Select
         #self.buttons.add(Button('arquivo_fade.py','arquivo_full.py',(0,0)))#Sair

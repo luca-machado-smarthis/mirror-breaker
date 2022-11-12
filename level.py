@@ -6,10 +6,11 @@ from tiles import Tile
 from setting import level_maps
 
 class Level:
-    def __init__(self, surface, create_menu, level_number):
+    def __init__(self, surface, create_menu, create_level, level_number):
         # level set_up
         self.display_surface = surface
         self.create_menu = create_menu # Depois usar para retornar ao menu
+        self.create_level = create_level # Depois usar quando terminar a fase para poder ir para proxima
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()  # sempre cria um grupo (mesmo que solitário) e depois instancia e  adiciona
         self.world_shift = 0
