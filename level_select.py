@@ -22,7 +22,7 @@ class LevelSelect():
     def create_buttons(self, level_achieved, create_level):
         for i in range(level_achieved+1):
             string = str(i+1)
-            self.buttons.add(Button('assets/level'+string+'Button_fade.png','assets/level'+string+'Button_full.png',(0,0), create_level, i))
+            self.buttons.add(Button('assets/level'+string+'Button_fade.png','assets/level'+string+'Button_full.png',(0 + i*(100),0), create_level, i))
 
 
 
