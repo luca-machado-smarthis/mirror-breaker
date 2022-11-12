@@ -13,6 +13,8 @@ class Button(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect(topleft = position)
 
+        self.click = True
+
         
 
     def collision_mice(self):
@@ -22,12 +24,15 @@ class Button(pygame.sprite.Sprite):
         else:
             return False
 
+    def get_click(self):
+        keys = pygame.mouse.get_pressed()
+        return keys[0] and self.click
 
-
-    def update(self,click):
+    def update(self):
         if self.collision_mice():
             self.image = self.image_full
-            if click:
+            if self.get_click():
+                self.click = False #So quero que posso ser clicado uma vez mesmo, todo botao que é clicado faz movimentacao de janela
                 self.action(self.info)
         else:
             self.image = self.image_fade

@@ -25,9 +25,9 @@ class Game:
 
     def run(self):
         if self.status == 'menu':
-            self.menu.run(can_click)
+            self.menu.run()
         elif self.status == 'level_select':
-            self.lselect.run(can_click)
+            self.lselect.run()
         else:
             self.level.run()
 
@@ -36,7 +36,6 @@ pygame.init()
 screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
 game = Game()
-can_click = False
 
 #print(screen_height)
 
@@ -45,10 +44,6 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            can_click = True
-        if event.type == pygame.MOUSEBUTTONUP:
-            can_click = False
     screen.fill('black')
     game.run()
 

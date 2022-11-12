@@ -26,6 +26,6 @@ class LevelSelect():
 
 
 
-    def run(self, click):
+    def run(self):
         self.buttons.draw(self.display_surface)
-        self.buttons.update(click)
+        self.buttons.update()
