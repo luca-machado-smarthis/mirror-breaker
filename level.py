@@ -14,7 +14,7 @@ class Level:
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()  # sempre cria um grupo (mesmo que solitário) e depois instancia e  adiciona
         self.world_shift = 0
-        self.level_number = level_number#Depois tem que fazer com que possa ao fazer o level_data baseado nesse number
+        self.level_number = level_number#Next level seria isso + 1
         self.setup_level(level_maps[level_number])  # pode já executar uma função quando instancia ISSO TEM QUE SER SEMPRE NO FINAL
         # pois pode dar problema com o que vier antes
 
@@ -79,6 +79,4 @@ class Level:
         self.horizontal_movement_collision()
         self.vertical_movement_collision()
         self.player.draw(self.display_surface)
-
-
-    #De vez enquando da um glitch no player onde ele teleporta, não sei pq    
+        
