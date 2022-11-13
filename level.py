@@ -9,6 +9,7 @@ class Level:
     def __init__(self, surface, create_menu, create_level, level_number):
         # level set_up
         self.display_surface = surface
+        self.background = pygame.image.load('assets/background.jpg').convert_alpha()
         self.create_menu = create_menu # Depois usar para retornar ao menu
         self.create_level = create_level # Depois usar quando terminar a fase para poder ir para proxima
         self.tiles = pygame.sprite.Group()
@@ -22,7 +23,7 @@ class Level:
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
                 if cell == 'x' or cell == 'X':
-                    tile = Tile((col_index * tile_size, row_index * tile_size), tile_size)
+                    tile = Tile((col_index * tile_size, row_index * tile_size))
                     self.tiles.add(tile)
                 elif cell == 'P':
                     player_sprite = Player((col_index * tile_size, row_index * tile_size))
@@ -77,6 +78,7 @@ class Level:
 
 
     def run(self):
+        self.display_surface.blit(self.background,(0,0))
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.display_surface)
         self.scroll_x()
