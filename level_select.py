@@ -7,6 +7,7 @@ class LevelSelect():
     def __init__(self, surface, create_level, create_menu, max_level):
 
         self.display_surface = surface
+        self.background = pygame.image.load('assets/menusBackground.png').convert_alpha()
 
         self.buttons = pygame.sprite.Group()
 
@@ -31,6 +32,7 @@ class LevelSelect():
             self.create_menu(self.max_level)
 
     def run(self):
+        self.display_surface.blit(self.background,(0,0))
         self.buttons.draw(self.display_surface)
         self.buttons.update()
         self.input_return()

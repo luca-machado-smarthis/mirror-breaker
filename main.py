@@ -8,7 +8,7 @@ from level_select import LevelSelect
 class Game:
     def __init__(self):
 
-        self.max_level = 1 #Começa do level 1/'0'
+        self.max_level = 0 #Começa do level 1/'0'
         self.create_menu(self.max_level) 
         
     def create_level(self, level):
@@ -46,13 +46,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-<<<<<<< HEAD
-
-    screen.fill('black')
-    level.run()
-=======
     game.run()
->>>>>>> marcos-menu
 
     pygame.display.update()
     clock.tick(60)

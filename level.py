@@ -23,10 +23,12 @@ class Level:
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
                 if cell == 'x' or cell == 'X':
-                    tile = Tile((col_index * tile_size, row_index * tile_size))
-                    self.tiles.add(tile)
+                    for i in range(2):
+                        for j in range(2):
+                            tile = Tile((col_index * tile_size + i*28, row_index * tile_size + j*28))
+                            self.tiles.add(tile)
                 elif cell == 'P':
-                    player_sprite = Player((col_index * tile_size, row_index * tile_size))
+                    player_sprite = Player((col_index * tile_size, row_index * tile_size ))
                     self.player.add(player_sprite)
 
     def scroll_x(self):
@@ -93,14 +95,7 @@ class Level:
         self.vertical_movement_collision()
 
     def run(self):
-<<<<<<< HEAD
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    print("buga")
-=======
         self.display_surface.blit(self.background,(0,0))
->>>>>>> marcos-menu
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.display_surface)
         self.scroll_x()
