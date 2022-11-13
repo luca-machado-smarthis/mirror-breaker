@@ -33,3 +33,4 @@ class LevelSelect():
     def run(self):
         self.buttons.draw(self.display_surface)
         self.buttons.update()
+        self.input_return()
