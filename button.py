@@ -1,7 +1,7 @@
 import pygame
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self, image_fade, image_full, position, action, info):
+    def __init__(self, image_fade, image_full, position, action, info = None):
         super().__init__()
         
         self.image_full = pygame.image.load(image_full).convert_alpha()
@@ -33,6 +33,9 @@ class Button(pygame.sprite.Sprite):
             self.image = self.image_full
             if self.get_click():
                 self.click = False #So quero que posso ser clicado uma vez mesmo, todo botao que é clicado faz movimentacao de janela
-                self.action(self.info)
+                if self.info == None:
+                    self.action()
+                else:
+                    self.action(self.info)
         else:
             self.image = self.image_fade

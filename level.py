@@ -68,6 +68,12 @@ class Level:
                 elif player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
                     player.reset_vertical_momentum()
+    
+
+    def input_return(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:
+            self.create_menu(self.level_number)
 
 
     def run(self):
@@ -79,4 +85,6 @@ class Level:
         self.horizontal_movement_collision()
         self.vertical_movement_collision()
         self.player.draw(self.display_surface)
-        
+
+        self.input_return()
+

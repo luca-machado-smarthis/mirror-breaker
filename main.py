@@ -7,20 +7,22 @@ from level_select import LevelSelect
 
 class Game:
     def __init__(self):
-        
-        self.create_menu(0) #Começa do level 1/'0'
+
+        self.max_level = 0 #Começa do level 1/'0'
+        self.create_menu(self.max_level) 
         
     def create_level(self, level):
         self.level = Level(screen, self.create_menu, self.create_level, level)
         self.status = 'level'
 
     def create_menu(self, max_level):
-        self.menu = Menu(screen, self.create_level, self.create_lselect, max_level)
+        if max_level > self.max_level:
+            self.max_level = max_level
+        self.menu = Menu(screen, self.create_level, self.create_lselect, self.max_level)
         self.status = 'menu'
-        #ToDo implementar nas outras classes para voltar ao menu
 
-    def create_lselect(self, max_level):
-        self.lselect = LevelSelect(screen, self.create_level, self.create_menu, max_level)
+    def create_lselect(self):
+        self.lselect = LevelSelect(screen, self.create_level, self.create_menu, self.max_level)
         self.status = 'level_select'
 
     def run(self):

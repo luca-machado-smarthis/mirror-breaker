@@ -22,9 +22,13 @@ class LevelSelect():
     def create_level_buttons(self, level_achieved, create_level):
         for i in range(level_achieved+1):
             string = str(i+1)
-            self.buttons.add(Button('assets/level'+string+'Button_fade.png','assets/level'+string+'Button_full.png',(0 + i*(300),0), create_level, i))
+            self.buttons.add(Button('assets/level'+string+'Button_fade.png','assets/level'+string+'Button_full.png',(0 + i*(500),0), create_level, i))
 
 
+    def input_return(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:
+            self.create_menu(self.max_level)
 
     def run(self):
         self.buttons.draw(self.display_surface)
