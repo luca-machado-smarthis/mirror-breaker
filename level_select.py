@@ -12,17 +12,17 @@ class LevelSelect():
 
         self.max_level = max_level
 
-        self.create_buttons(max_level, create_level)
+        self.create_level_buttons(max_level, create_level)
+
+        self.create_menu = create_menu
 
 
 
 
-
-
-    def create_buttons(self, level_achieved, create_level):
+    def create_level_buttons(self, level_achieved, create_level):
         for i in range(level_achieved+1):
             string = str(i+1)
-            self.buttons.add(Button('assets/level'+string+'Button_fade.png','assets/level'+string+'Button_full.png',(0 + i*(100),0), create_level, i))
+            self.buttons.add(Button('assets/level'+string+'Button_fade.png','assets/level'+string+'Button_full.png',(0 + i*(300),0), create_level, i))
 
 
 

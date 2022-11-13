@@ -10,6 +10,7 @@ class Game:
         
         self.menu = Menu(screen, self.create_level, self.create_lselect, 0)
         self.status = 'menu'
+        
     
     def create_level(self, level):
         self.level = Level(screen, self.create_menu, self.create_level, level)
