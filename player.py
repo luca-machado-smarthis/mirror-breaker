@@ -3,7 +3,7 @@ import pygame
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
-        self.image = pygame.image.load('assets/idle_1teste.png')
+        self.image = pygame.image.load('assets/idle_1teste.png').convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
 
         self.direction = pygame.math.Vector2(0, 0) # só para não ter qur criar 2 variáveis

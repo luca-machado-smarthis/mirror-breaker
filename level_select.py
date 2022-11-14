@@ -1,6 +1,5 @@
 import pygame
 from button import Button
-from setting import level_maps
 
 
 class LevelSelect():

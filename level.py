@@ -3,21 +3,31 @@ import pygame
 from player import Player
 from setting import *
 from tiles import Tile
-from setting import level_maps
+from mirror import Mirror
+from spike import Spike
+from exit import Exit
+from setting import level_maps, mirror_total_maps
 
 class Level:
     def __init__(self, surface, create_menu, create_level, level_number):
         # level set_up
         self.display_surface = surface
         self.background = pygame.image.load('assets/background.jpg').convert_alpha()
+        self.text_font = pygame.font.Font(None, 75)
         self.create_menu = create_menu # Depois usar para retornar ao menu
         self.create_level = create_level # Depois usar quando terminar a fase para poder ir para proxima
         self.tiles = pygame.sprite.Group()
+        self.mirrors = pygame.sprite.Group()
+        self.spikes = pygame.sprite.Group()
+        self.exit = pygame.sprite.GroupSingle()
         self.player = pygame.sprite.GroupSingle()  # sempre cria um grupo (mesmo que solitário) e depois instancia e  adiciona
         self.world_shift = 0
+        self.text_surface = self.text_font.render(f'0/{mirror_total_maps[level_number]}', False, 'Blue')
         self.level_number = level_number#Next level seria isso + 1
         self.setup_level(level_maps[level_number])  # pode já executar uma função quando instancia ISSO TEM QUE SER SEMPRE NO FINAL
         # pois pode dar problema com o que vier antes
+
+        
 
     def setup_level(self, layout):
         for row_index, row in enumerate(layout):
@@ -30,6 +40,21 @@ class Level:
                 elif cell == 'P':
                     player_sprite = Player((col_index * tile_size, row_index * tile_size ))
                     self.player.add(player_sprite)
+                elif cell == 'M':
+                    mirror = Mirror((col_index * tile_size, row_index * tile_size ))
+                    self.mirrors.add(mirror)
+                elif cell == 's':
+                    for i in range(4):
+                        spike = Spike((col_index * tile_size + i*14, row_index * tile_size))
+                        self.spikes.add(spike)
+                elif cell == 'E':
+                    exit_sprite = Exit((col_index * tile_size, (row_index+1) * tile_size ))
+                    self.exit.add(exit_sprite)
+
+
+    
+        
+    
 
     def scroll_x(self):
         player = self.player.sprite
@@ -100,9 +125,19 @@ class Level:
         self.tiles.draw(self.display_surface)
         self.scroll_x()
 
+        self.mirrors.update(self.world_shift)
+        self.mirrors.draw(self.display_surface)
+
+        self.spikes.update(self.world_shift)
+        self.spikes.draw(self.display_surface)
+
+        self.exit.update(self.world_shift)
+        self.exit.draw(self.display_surface)
+
         self.player.update()
         self.player_movement()
         self.player.draw(self.display_surface)
 
         self.input_return()
+        self.display_surface.blit(self.text_surface,(100,50))
 
