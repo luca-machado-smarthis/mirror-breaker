@@ -5,7 +5,7 @@ class Mirror(pygame.sprite.Sprite):
         super().__init__()
         self.image_whole = pygame.image.load('assets/mirrorTest.png').convert_alpha()
         #self.image_broken = pygame.image.load('assets/mirrorBroken_Test.png').convert_alpha()
-        self.rect = self.image_whole.get_rect(topleft=pos)
+        self.rect = self.image_whole.get_rect(topleft=(pos[0], pos[1] + 10))
         self.state = 'whole'
 
     def update(self, x_shift):

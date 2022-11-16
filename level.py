@@ -32,26 +32,34 @@ class Level:
 
     def setup_level(self, layout):
         for row_index, row in enumerate(layout):
+            row_index -= 1
             for col_index, cell in enumerate(row):
-                if cell == 'x' or cell == 'X':
+                if row_index == -1:
                     for i in range(2):
                         for j in range(2):
-                            tile = Tile((col_index * tile_size + i*28, row_index * tile_size + j*28))
+                            tile = Tile((col_index * tile_size + i*28, row_index * tile_size + j*28 - 56))
                             self.tiles.add(tile)
-                elif cell == 'P':
-                    player_sprite = Player((col_index * tile_size, row_index * tile_size ))
-                    self.player.add(player_sprite)
-                elif cell == 'M':
-                    mirror = Mirror((col_index * tile_size, (row_index-1) * tile_size ))
-                    self.mirrors.add(mirror)
-                    self.mirror_quant += 1
-                elif cell == 's':
-                    for i in range(4):
-                        spike = Spike((col_index * tile_size + i*14, (row_index+1) * tile_size))
-                        self.spikes.add(spike)
-                elif cell == 'E':
-                    exit_sprite = Exit((col_index * tile_size, (row_index+1) * tile_size ))
-                    self.exit.add(exit_sprite)
+                else:
+                    
+                    if cell == 'x' or cell == 'X':
+                        for i in range(2):
+                            for j in range(2):
+                                tile = Tile((col_index * tile_size + i*28, row_index * tile_size + j*28))
+                                self.tiles.add(tile)
+                    elif cell == 'P':
+                        player_sprite = Player((col_index * tile_size, row_index * tile_size ))
+                        self.player.add(player_sprite)
+                    elif cell == 'M':
+                        mirror = Mirror((col_index * tile_size, (row_index-1) * tile_size ))
+                        self.mirrors.add(mirror)
+                        self.mirror_quant += 1
+                    elif cell == 's':
+                        for i in range(4):
+                            spike = Spike((col_index * tile_size + i*14, (row_index+1) * tile_size))
+                            self.spikes.add(spike)
+                    elif cell == 'E':
+                        exit_sprite = Exit((col_index * tile_size, (row_index+1) * tile_size ))
+                        self.exit.add(exit_sprite)
 
 
     
