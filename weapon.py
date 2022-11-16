@@ -1,15 +1,31 @@
 import pygame
 
 class Weapon(pygame.sprite.Sprite):
-    def __init__(self, pos):
+    def __init__(self, pos, p_d):
         super().__init__()
         self.image = pygame.image.load('assets/weapon.png').convert_alpha()
-        self.rect = self.image.get_rect(topleft=(pos[0] - 20, pos[1] - 10))
+        image_copy = self.image.copy()
+        self.image_reverse = pygame.transform.flip(image_copy, True, False)
+        self.image_normal = self.image
+        self.pos_x = pos[0] + p_d[0]*2 - 30
+        self.pos_y = pos[1] + p_d[1]/2 - 5
+        self.p_d = p_d
+        self.rect = self.image.get_rect(midright=(self.pos_x, self.pos_y))
+        self.move = 20
 
 
 
-    def update(self, pos, input):
+    def update(self, pos, input, direction):
+        self.pos_y = pos[1] + self.p_d[1]/2 - 5
+        if direction > 0:
+            self.image = self.image_normal
+            self.pos_x = pos[0] + self.p_d[0]*2 - 30
+            self.move = 20
+        if direction < 0:
+            self.image = self.image_reverse
+            self.pos_x = pos[0]
+            self.move = -20
         if input:
-            self.rect = self.image.get_rect(topleft=(pos[0], pos[1] - 10))
+            self.rect = self.image.get_rect(midright=(self.pos_x + self.move, self.pos_y))
         else:
-            self.rect = self.image.get_rect(topleft=(pos[0] - 20, pos[1] - 10))
+            self.rect = self.image.get_rect(midright=(self.pos_x, self.pos_y))

@@ -130,7 +130,7 @@ class Level:
 
     
     def display_timer(self):
-        pygame.time.set_timer()
+        pass
 
     def run(self):
         self.display_surface.blit(self.background,(0,0))

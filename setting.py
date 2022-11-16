@@ -20,4 +20,4 @@ screen_height = 11 * tile_size #numeros de linhas totais em todos as fases
 
 level_maps = [level_map1, level_map1,0,0,0,0,0,0,0,0,0,0] #Botei o mapa um no level2 so para testar o level_select
 
-timer_maps = [60,0,0,0,0,0,0,0,0,0,0,0]
+timer_maps = [30000,0,0,0,0,0,0,0,0,0,0,0]#tempo em milisegundos

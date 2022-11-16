@@ -6,6 +6,9 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load('assets/idle_1teste.png').convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
+        image_copy = self.image.copy()
+        self.image_normal = self.image
+        self.image_reverse = pygame.transform.flip(image_copy, True, False)
 
         self.direction = pygame.math.Vector2(0, 0) # só para não ter qur criar 2 variáveis
         self.speed = 6
@@ -16,7 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.wall_jump_direction = 0
 
         self.weapon = pygame.sprite.GroupSingle()
-        self.weapon.add(Weapon((pos[0] + self.image.get_width(), pos[1] + (self.image.get_height() / 2))))
+        self.weapon.add(Weapon(pos, (self.image.get_width(),self.image.get_height())))
         self.attack = False
         self.click = True
         self.timing = 600
@@ -64,12 +67,19 @@ class Player(pygame.sprite.Sprite):
             if self.timing <= 0:
                 self.timing = 600
                 self.click = True
+    
+    def change_image(self):
+        if self.direction.x > 0:
+            self.image = self.image_normal
+        if self.direction.x < 0:
+            self.image = self.image_reverse
 
 
     def update(self,surface):
         time_passed = self.time - pygame.time.get_ticks()
         self.get_input()
-        self.weapon.update((self.rect.left + self.image.get_width(), self.rect.top + self.image.get_height()/2), self.attack)
+        self.change_image()
+        self.weapon.update((self.rect.left, self.rect.top), self.attack, self.direction.x)
         self.weapon.draw(surface)
         self.aggresion(time_passed)
         self.time = pygame.time.get_ticks()
