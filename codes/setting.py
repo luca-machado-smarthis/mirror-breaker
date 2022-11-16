@@ -5,8 +5,8 @@ level_map1 = [
     'xM     xxxx    xxxx        xxxx        xxxxxxxx   ',
     'xxxx                    s              xxxxxxxx   ',
     'x                    xxxx              xxxxxxxx   ',
-    'x           xxxx                         xxxxxx   ',
-    'x                   M                   Exxxxxx   ',
+    'x           xxxx                          xxxxx   ',
+    'x                   M                   E xxxxx   ',
     'x       xxx       xxx            xxxxxxxxxxxxxx   ',
     'x                 xx     ss      xxxxxxxxxxxxxx   ',
     'x  P                    xxx      xxxxxxxxxxxxxx   ',
@@ -36,4 +36,4 @@ screen_height = 11 * tile_size #numeros de linhas totais em todos as fases
 
 level_maps = [level_map1, level_map2,0,0,0,0,0,0,0,0,0,0] #Botei o mapa um no level2 so para testar o level_select
 
-timer_maps = [30000,200000,0,0,0,0,0,0,0,0,0,0]#tempo em milisegundos
+timer_maps = [20000,2000000,0,0,0,0,0,0,0,0,0,0]#tempo em milisegundos

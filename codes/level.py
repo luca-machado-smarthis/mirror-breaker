@@ -32,7 +32,7 @@ class Level:
 
         #Set-up
         self.setup_level(level_maps[level_number])
-        self.text_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')#Tem que vir dps do setup pelo mirror_quant
+        self.mirror_count_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')#Tem que vir dps do setup pelo mirror_quant
         self.time = timer_maps[level_number]
         self.start_time = pygame.time.get_ticks()
 
@@ -67,15 +67,13 @@ class Level:
                     elif cell == 'E':
                         exit_sprite = Exit((col_index * tile_size, (row_index+1) * tile_size ))
                         self.exit.add(exit_sprite)
-
-
-    
         
+
+
     def scroll_x(self):
         player = self.player.sprite
         player_x = player.rect.centerx
         direction_x = player.direction.x
-
         if player_x < screen_width/5 and direction_x < 0:
             self.world_shift = 8
             player.speed = 0
@@ -86,10 +84,11 @@ class Level:
             self.world_shift = 0
             player.speed = 8
 
+
+
     def vertical_movement_collision(self):
         player = self.player.sprite
         player.apply_gravity()
-
         for sprite in self.tiles.sprites():  #todo adicionar wallJUmp
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y < 0: # melhor forma de ver com o que se está colidindo
@@ -101,17 +100,19 @@ class Level:
                     player.reset_vertical_momentum()
     
 
+
     def input_return(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
             self.create_menu(self.level_number)
+
+
 
     def horizontal_movement_collision(self):
         player = self.player.sprite
         player.rect.x += player.direction.x * player.speed
         player.gravity = 0.8
         player.can_wall_jump = False
-
         for sprite in self.tiles.sprites(): #todo consertar walljump após saber usar temporizador
             if sprite.rect.colliderect(player.rect):
                 if player.direction.x < 0: # melhor forma de ver com o que se está colidindo
@@ -130,30 +131,35 @@ class Level:
                     player.wall_jump_direction = -6
 
 
+
     def player_movement(self):
         self.horizontal_movement_collision()
         self.vertical_movement_collision()
 
     
+
     def display_timer(self):
-        pass
-    #ToDo
+        time_passed = pygame.time.get_ticks() - self.start_time
+        time_surface = self.text_font.render(f'{(self.time - time_passed)/1000:.2f}', False, 'Blue')
+        self.display_surface.blit(time_surface, (1000,50))
+        if self.time - time_passed <= 0:
+            self.create_level(self.level_number)
+        
+        
 
     def mirror_colission_weapon(self):
         player = self.player.sprite
-        mirrors = self.mirrors.sprites()
         if player.attack:
+            mirrors = self.mirrors.sprites()
             weapon = player.weapon.sprite
             for mirror in mirrors:
                 if mirror.rect.colliderect(weapon.rect) and mirror.status:
                     mirror.change_image_broken()
                     self.mirror_broken += 1
-                    self.text_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')
+                    self.mirror_count_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')
                     break
                     
-
-
-    #ToDo 
+    
 
     def run(self):
         self.display_surface.blit(self.background,(0,0))
@@ -170,12 +176,12 @@ class Level:
         self.exit.update(self.world_shift)
         self.exit.draw(self.display_surface)
 
-    
         self.player.draw(self.display_surface)
         self.player.update(self.display_surface)
         self.player_movement()
         
         self.mirror_colission_weapon()
         self.input_return()
-        self.display_surface.blit(self.text_surface,(100,50))
+        self.display_timer()
+        self.display_surface.blit(self.mirror_count_surface,(100,50))
 
