@@ -35,6 +35,7 @@ class Level:
         self.mirror_count_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')#Tem que vir dps do setup pelo mirror_quant
         self.time = timer_maps[level_number]
         self.start_time = pygame.time.get_ticks()
+        self.status = 'run'
 
         
 
@@ -56,6 +57,7 @@ class Level:
                     elif cell == 'P':
                         player_sprite = Player((col_index * tile_size, row_index * tile_size ))
                         self.player.add(player_sprite)
+                        #Tem que arranjar um jeito de começar a camera no player
                     elif cell == 'M':
                         mirror = Mirror((col_index * tile_size, (row_index-1) * tile_size ))
                         self.mirrors.add(mirror)
@@ -139,11 +141,15 @@ class Level:
     
 
     def display_timer(self):
-        time_passed = pygame.time.get_ticks() - self.start_time
-        time_surface = self.text_font.render(f'{(self.time - time_passed)/1000:.2f}', False, 'Blue')
-        self.display_surface.blit(time_surface, (1000,50))
-        if self.time - time_passed <= 0:
-            self.create_level(self.level_number)
+        if self.status == 'run':
+            time_passed = pygame.time.get_ticks() - self.start_time
+            self.time_surface = self.text_font.render(f'{(self.time - time_passed)/1000:.2f}', False, 'Blue')
+            if self.time - time_passed <= 0:
+                self.create_level(self.level_number)
+        elif self.status == 'won':
+            pass
+        self.display_surface.blit(self.time_surface, (1000,50))
+        
         
         
 
@@ -156,10 +162,26 @@ class Level:
                 if mirror.rect.colliderect(weapon.rect) and mirror.status:
                     mirror.change_image_broken()
                     self.mirror_broken += 1
+                    self.win_condition()
                     self.mirror_count_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')
                     break
                     
+
+
+    def win_condition(self):
+        if self.mirror_quant == self.mirror_broken:
+            self.status = 'won' 
+            exit = self.exit.sprite
+            exit.open_exit()
+
     
+    def next_level(self):
+        if self.status == 'won':
+            player = self.player.sprite
+            exit = self.exit.sprite
+            if player.rect.colliderect(exit.rect):
+                self.create_level(self.level_number+1)
+
 
     def run(self):
         self.display_surface.blit(self.background,(0,0))
@@ -184,4 +206,6 @@ class Level:
         self.input_return()
         self.display_timer()
         self.display_surface.blit(self.mirror_count_surface,(100,50))
+
+        self.next_level()
 
