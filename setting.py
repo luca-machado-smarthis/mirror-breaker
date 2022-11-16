@@ -1,14 +1,13 @@
 level_map1 = [
-    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   ',
     'x                                  xxxxxx   ',
     'x                        M         xxxxxx   ',
     'xM     xxx    xxx     xxxx         xxxxxx   ',
     'xxx                 s              xxxxxx   ',
     'x                 xxx              xxxxxx   ',
-    'x        xxx                       xxxxxx   ',
-    'x               M                 Exxxxxx   ',
+    'x s      xxx                       xxxxxx   ',
+    'x xx            M                 Exxxxxx   ',
     'x              xx            xxxxxxxxxxxx   ',
-    'x  xx          xx   ss       xxxxxxxxxxxx   ',
+    'x      xx      xx   ss       xxxxxxxxxxxx   ',
     'x  P                xx       xxxxxxxxxxxx   ',
     'xxxxxxxxxxxxxxx              xxxxxxxxxxxx   ',
 ]

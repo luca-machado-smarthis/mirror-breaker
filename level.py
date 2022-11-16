@@ -56,8 +56,6 @@ class Level:
 
     
         
-    
-
     def scroll_x(self):
         player = self.player.sprite
         player_x = player.rect.centerx
@@ -136,9 +134,11 @@ class Level:
         self.exit.update(self.world_shift)
         self.exit.draw(self.display_surface)
 
-        self.player.update()
-        self.player_movement()
+    
         self.player.draw(self.display_surface)
+        self.player.update(self.display_surface)
+        self.player_movement()
+        
 
         self.input_return()
         self.display_surface.blit(self.text_surface,(100,50))

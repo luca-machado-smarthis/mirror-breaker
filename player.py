@@ -1,4 +1,5 @@
 import pygame
+from weapon import Weapon
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos):
@@ -13,6 +14,10 @@ class Player(pygame.sprite.Sprite):
         self.can_jump = True
         self.can_wall_jump = False
         self.wall_jump_direction = 0
+
+        self.weapon = pygame.sprite.GroupSingle()
+        a,b = pos
+        self.weapon.add(Weapon((a + self.image.get_width(), b + (self.image.get_height() / 2))))
 
     def get_input(self):
         keys = pygame.key.get_pressed()
@@ -46,5 +51,7 @@ class Player(pygame.sprite.Sprite):
         self.direction.y = self.jump_speed*0.8
 
 
-    def update(self):
+    def update(self,surface):
         self.get_input()
+        self.weapon.update((self.rect.left + self.image.get_width(), self.rect.top + self.image.get_height()/2))
+        self.weapon.draw(surface)
