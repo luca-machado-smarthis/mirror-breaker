@@ -6,7 +6,7 @@ from tiles import Tile
 from mirror import Mirror
 from spike import Spike
 from exit import Exit
-from setting import level_maps, mirror_total_maps
+from setting import level_maps
 
 class Level:
     def __init__(self, surface, create_menu, create_level, level_number):
@@ -22,10 +22,11 @@ class Level:
         self.exit = pygame.sprite.GroupSingle()
         self.player = pygame.sprite.GroupSingle()  # sempre cria um grupo (mesmo que solitário) e depois instancia e  adiciona
         self.world_shift = 0
-        self.text_surface = self.text_font.render(f'0/{mirror_total_maps[level_number]}', False, 'Blue')
+        self.mirror_quant = 0
         self.level_number = level_number#Next level seria isso + 1
         self.setup_level(level_maps[level_number])  # pode já executar uma função quando instancia ISSO TEM QUE SER SEMPRE NO FINAL
         # pois pode dar problema com o que vier antes
+        self.text_surface = self.text_font.render(f'0/{self.mirror_quant}', False, 'Blue')
 
         
 
@@ -41,11 +42,12 @@ class Level:
                     player_sprite = Player((col_index * tile_size, row_index * tile_size ))
                     self.player.add(player_sprite)
                 elif cell == 'M':
-                    mirror = Mirror((col_index * tile_size, row_index * tile_size ))
+                    mirror = Mirror((col_index * tile_size, (row_index-1) * tile_size ))
                     self.mirrors.add(mirror)
+                    self.mirror_quant += 1
                 elif cell == 's':
                     for i in range(4):
-                        spike = Spike((col_index * tile_size + i*14, row_index * tile_size))
+                        spike = Spike((col_index * tile_size + i*14, (row_index+1) * tile_size))
                         self.spikes.add(spike)
                 elif cell == 'E':
                     exit_sprite = Exit((col_index * tile_size, (row_index+1) * tile_size ))
