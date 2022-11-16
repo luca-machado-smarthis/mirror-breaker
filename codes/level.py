@@ -10,25 +10,31 @@ from setting import level_maps
 
 class Level:
     def __init__(self, surface, create_menu, create_level, level_number):
-        # level set_up
+        #Cores
         self.display_surface = surface
         self.background = pygame.image.load('assets/background.jpg').convert_alpha()
         self.text_font = pygame.font.Font(None, 75)
         self.create_menu = create_menu # Depois usar para retornar ao menu
         self.create_level = create_level # Depois usar quando terminar a fase para poder ir para proxima
+
+        #Groups
         self.tiles = pygame.sprite.Group()
         self.mirrors = pygame.sprite.Group()
         self.spikes = pygame.sprite.Group()
         self.exit = pygame.sprite.GroupSingle()
         self.player = pygame.sprite.GroupSingle()  # sempre cria um grupo (mesmo que solitário) e depois instancia e  adiciona
+
+        #Integers
         self.world_shift = 0
         self.mirror_quant = 0
         self.mirror_broken = 0
         self.level_number = level_number#Next level seria isso + 1
-        self.setup_level(level_maps[level_number])  # pode já executar uma função quando instancia ISSO TEM QUE SER SEMPRE NO FINAL
-        # pois pode dar problema com o que vier antes
-        self.text_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')
+
+        #Set-up
+        self.setup_level(level_maps[level_number])
+        self.text_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')#Tem que vir dps do setup pelo mirror_quant
         self.time = timer_maps[level_number]
+        self.start_time = pygame.time.get_ticks()
 
         
 
@@ -143,6 +149,7 @@ class Level:
                     mirror.change_image_broken()
                     self.mirror_broken += 1
                     self.text_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')
+                    break
                     
 
 
