@@ -8,7 +8,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
 
         self.direction = pygame.math.Vector2(0, 0) # só para não ter qur criar 2 variáveis
-        self.speed = 8
+        self.speed = 6
         self.gravity = 0.8
         self.jump_speed = - 16
         self.can_jump = True
@@ -16,8 +16,11 @@ class Player(pygame.sprite.Sprite):
         self.wall_jump_direction = 0
 
         self.weapon = pygame.sprite.GroupSingle()
-        a,b = pos
-        self.weapon.add(Weapon((a + self.image.get_width(), b + (self.image.get_height() / 2))))
+        self.weapon.add(Weapon((pos[0] + self.image.get_width(), pos[1] + (self.image.get_height() / 2))))
+        self.attack = False
+        self.click = True
+        self.timing = 600
+        self.time = 0
 
     def get_input(self):
         keys = pygame.key.get_pressed()
@@ -35,6 +38,9 @@ class Player(pygame.sprite.Sprite):
                 self.wall_jump()
         # if not keys[pygame.K_SPACE]:
         #     self.can_jump = True
+        if not(self.attack) and keys[pygame.K_q] and self.click:
+            self.attack = True
+            self.click = False
 
     def apply_gravity(self):
         self.direction.y += self.gravity
@@ -49,9 +55,21 @@ class Player(pygame.sprite.Sprite):
     def wall_jump(self):
         self.direction.x = self.wall_jump_direction
         self.direction.y = self.jump_speed*0.8
+    
+    def aggresion(self, time):
+        if self.attack and self.timing <= 300 :
+            self.attack = False
+        if not(self.click):
+            self.timing += time
+            if self.timing <= 0:
+                self.timing = 600
+                self.click = True
 
 
     def update(self,surface):
+        time_passed = self.time - pygame.time.get_ticks()
         self.get_input()
-        self.weapon.update((self.rect.left + self.image.get_width(), self.rect.top + self.image.get_height()/2))
+        self.weapon.update((self.rect.left + self.image.get_width(), self.rect.top + self.image.get_height()/2), self.attack)
         self.weapon.draw(surface)
+        self.aggresion(time_passed)
+        self.time = pygame.time.get_ticks()

@@ -27,6 +27,7 @@ class Level:
         self.setup_level(level_maps[level_number])  # pode já executar uma função quando instancia ISSO TEM QUE SER SEMPRE NO FINAL
         # pois pode dar problema com o que vier antes
         self.text_surface = self.text_font.render(f'0/{self.mirror_quant}', False, 'Blue')
+        self.time = timer_maps[level_number]
 
         
 
@@ -126,6 +127,10 @@ class Level:
     def player_movement(self):
         self.horizontal_movement_collision()
         self.vertical_movement_collision()
+
+    
+    def display_timer(self):
+        pygame.time.set_timer()
 
     def run(self):
         self.display_surface.blit(self.background,(0,0))

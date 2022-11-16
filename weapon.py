@@ -7,5 +7,9 @@ class Weapon(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=(pos[0] - 20, pos[1] - 10))
 
 
-    def update(self, pos):
-        self.rect = self.image.get_rect(topleft=(pos[0] - 20, pos[1] - 10))
+
+    def update(self, pos, input):
+        if input:
+            self.rect = self.image.get_rect(topleft=(pos[0], pos[1] - 10))
+        else:
+            self.rect = self.image.get_rect(topleft=(pos[0] - 20, pos[1] - 10))
