@@ -41,7 +41,6 @@ class Level:
                             tile = Tile((col_index * tile_size + i*28, row_index * tile_size + j*28 - 56))
                             self.tiles.add(tile)
                 else:
-                    
                     if cell == 'x' or cell == 'X':
                         for i in range(2):
                             for j in range(2):
@@ -131,6 +130,11 @@ class Level:
     
     def display_timer(self):
         pass
+    #ToDo
+
+    def mirror_colission_weapon(self):
+        pass
+    #ToDo 
 
     def run(self):
         self.display_surface.blit(self.background,(0,0))

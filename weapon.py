@@ -12,6 +12,7 @@ class Weapon(pygame.sprite.Sprite):
         self.p_d = p_d
         self.rect = self.image.get_rect(midright=(self.pos_x, self.pos_y))
         self.move = 20
+        self.status = 'inactive'
 
 
 
@@ -21,11 +22,18 @@ class Weapon(pygame.sprite.Sprite):
             self.image = self.image_normal
             self.pos_x = pos[0] + self.p_d[0]*2 - 30
             self.move = 20
-        if direction < 0:
+        elif direction < 0:
             self.image = self.image_reverse
-            self.pos_x = pos[0]
+            self.pos_x = pos[0] + 10
             self.move = -20
-        if input:
-            self.rect = self.image.get_rect(midright=(self.pos_x + self.move, self.pos_y))
         else:
-            self.rect = self.image.get_rect(midright=(self.pos_x, self.pos_y))
+            if self.move < 0:
+                self.pos_x = pos[0] + 10
+            else:
+                self.pos_x = pos[0] + self.p_d[0]*2 - 30
+        if input:
+            self.rect.midright=(self.pos_x + self.move, self.pos_y)
+            self.status = 'active'
+        else:
+            self.rect.midright=(self.pos_x, self.pos_y)
+            self.status = 'inactive'
