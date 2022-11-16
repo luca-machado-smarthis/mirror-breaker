@@ -12,8 +12,8 @@ class Weapon(pygame.sprite.Sprite):
         self.p_d = p_d
         self.rect = self.image.get_rect(midright=(self.pos_x, self.pos_y))
         self.move = 20
-        self.status = 'inactive'
 
+    
 
 
     def update(self, pos, input, direction):
@@ -33,7 +33,5 @@ class Weapon(pygame.sprite.Sprite):
                 self.pos_x = pos[0] + self.p_d[0]*2 - 30
         if input:
             self.rect.midright=(self.pos_x + self.move, self.pos_y)
-            self.status = 'active'
         else:
             self.rect.midright=(self.pos_x, self.pos_y)
-            self.status = 'inactive'

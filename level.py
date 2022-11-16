@@ -23,10 +23,11 @@ class Level:
         self.player = pygame.sprite.GroupSingle()  # sempre cria um grupo (mesmo que solitário) e depois instancia e  adiciona
         self.world_shift = 0
         self.mirror_quant = 0
+        self.mirror_broken = 0
         self.level_number = level_number#Next level seria isso + 1
         self.setup_level(level_maps[level_number])  # pode já executar uma função quando instancia ISSO TEM QUE SER SEMPRE NO FINAL
         # pois pode dar problema com o que vier antes
-        self.text_surface = self.text_font.render(f'0/{self.mirror_quant}', False, 'Blue')
+        self.text_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')
         self.time = timer_maps[level_number]
 
         
@@ -133,7 +134,18 @@ class Level:
     #ToDo
 
     def mirror_colission_weapon(self):
-        pass
+        player = self.player.sprite
+        mirrors = self.mirrors.sprites()
+        if player.attack:
+            weapon = player.weapon.sprite
+            for mirror in mirrors:
+                if mirror.rect.colliderect(weapon.rect) and mirror.status:
+                    mirror.change_image_broken()
+                    self.mirror_broken += 1
+                    self.text_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')
+                    
+
+
     #ToDo 
 
     def run(self):
@@ -156,7 +168,7 @@ class Level:
         self.player.update(self.display_surface)
         self.player_movement()
         
-
+        self.mirror_colission_weapon()
         self.input_return()
         self.display_surface.blit(self.text_surface,(100,50))
 
