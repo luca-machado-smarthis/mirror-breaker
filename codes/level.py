@@ -141,13 +141,10 @@ class Level:
     
 
     def display_timer(self):
-        if self.status == 'run':
-            time_passed = pygame.time.get_ticks() - self.start_time
-            self.time_surface = self.text_font.render(f'{(self.time - time_passed)/1000:.2f}', False, 'Blue')
-            if self.time - time_passed <= 0:
-                self.create_level(self.level_number)
-        elif self.status == 'won':
-            pass
+        time_passed = pygame.time.get_ticks() - self.start_time
+        self.time_surface = self.text_font.render(f'{(self.time - time_passed)/1000:.2f}', False, 'Blue')
+        if self.time - time_passed <= 0:
+            self.create_level(self.level_number)
         self.display_surface.blit(self.time_surface, (1000,50))
         
         
@@ -170,17 +167,19 @@ class Level:
 
     def win_condition(self):
         if self.mirror_quant == self.mirror_broken:
-            self.status = 'won' 
+            self.status = 'exit' 
             exit = self.exit.sprite
             exit.open_exit()
 
     
     def next_level(self):
-        if self.status == 'won':
+        if self.status == 'exit':
             player = self.player.sprite
             exit = self.exit.sprite
             if player.rect.colliderect(exit.rect):
+                self.status = 'won'
                 self.create_level(self.level_number+1)
+                
 
 
     def run(self):
