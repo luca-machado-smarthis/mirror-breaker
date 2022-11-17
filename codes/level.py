@@ -38,7 +38,6 @@ class Level:
         self.status = 'run'
 
         
-
     def setup_level(self, layout):
         for row_index, row in enumerate(layout):
             row_index -= 1
@@ -71,7 +70,6 @@ class Level:
                         self.exit.add(exit_sprite)
         
 
-
     def scroll_x(self):
         player = self.player.sprite
         player_x = player.rect.centerx
@@ -85,7 +83,6 @@ class Level:
         else:
             self.world_shift = 0
             player.speed = 8
-
 
 
     def vertical_movement_collision(self):
@@ -102,12 +99,10 @@ class Level:
                     player.reset_vertical_momentum()
     
 
-
     def input_return(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
             self.create_menu(self.level_number)
-
 
 
     def horizontal_movement_collision(self):
@@ -133,13 +128,11 @@ class Level:
                     player.wall_jump_direction = -6
 
 
-
     def player_movement(self):
         self.horizontal_movement_collision()
         self.vertical_movement_collision()
 
     
-
     def display_timer(self):
         time_passed = pygame.time.get_ticks() - self.start_time
         self.time_surface = self.text_font.render(f'{(self.time - time_passed)/1000:.2f}', False, 'Blue')
@@ -148,8 +141,6 @@ class Level:
         self.display_surface.blit(self.time_surface, (1000,50))
         
         
-        
-
     def mirror_colission_weapon(self):
         player = self.player.sprite
         if player.attack:
@@ -163,7 +154,6 @@ class Level:
                     self.mirror_count_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')
                     break
                     
-
 
     def win_condition(self):
         if self.mirror_quant == self.mirror_broken:
@@ -179,7 +169,14 @@ class Level:
             if player.rect.colliderect(exit.rect):
                 self.status = 'won'
                 self.create_level(self.level_number+1)
-                
+    
+    def death(self):
+        player = self.player.sprite
+        for spike in self.spikes:
+            if player.rect.colliderect(spike.rect):
+                self.create_level(self.level_number)
+        if player.rect.top >= screen_height:
+            self.create_level(self.level_number)
 
 
     def run(self):
@@ -205,6 +202,6 @@ class Level:
         self.input_return()
         self.display_timer()
         self.display_surface.blit(self.mirror_count_surface,(100,50))
-
+        self.death()
         self.next_level()
 
