@@ -6,6 +6,7 @@ from tiles import Tile
 from mirror import Mirror
 from spike import Spike
 from exit import Exit
+from button import Button
 from setting import level_maps
 
 class Level:
@@ -13,7 +14,7 @@ class Level:
         #Cores
         self.display_surface = surface
         self.background = pygame.image.load('assets/background.jpg').convert_alpha()
-        self.text_font = pygame.font.Font(None, 75)
+        self.text_font = pygame.font.Font(None, 100)
         self.create_menu = create_menu # Depois usar para retornar ao menu
         self.create_level = create_level # Depois usar quando terminar a fase para poder ir para proxima
 
@@ -137,7 +138,7 @@ class Level:
         time_passed = pygame.time.get_ticks() - self.start_time
         self.time_surface = self.text_font.render(f'{(self.time - time_passed)/1000:.2f}', False, 'Blue')
         if self.time - time_passed <= 0:
-            self.create_level(self.level_number)
+            self.status = 'loss'
         self.display_surface.blit(self.time_surface, (1000,50))
         
         
@@ -157,51 +158,62 @@ class Level:
 
     def win_condition(self):
         if self.mirror_quant == self.mirror_broken:
-            self.status = 'exit' 
+            self.status = 'clear' 
             exit = self.exit.sprite
             exit.open_exit()
+            self.clear_time = True #toDo armazenar o tempo de clear
 
     
     def next_level(self):
-        if self.status == 'exit':
+        if self.status == 'clear':
             player = self.player.sprite
             exit = self.exit.sprite
             if player.rect.colliderect(exit.rect):
                 self.status = 'won'
-                self.create_level(self.level_number+1)
-    
+                self.won_time = True #toDo armazenar o tempo total que demorou até saida da fase
+
     def death(self):
         player = self.player.sprite
         for spike in self.spikes:
             if player.rect.colliderect(spike.rect):
-                self.create_level(self.level_number)
+                self.status = 'loss'
         if player.rect.top >= screen_height:
-            self.create_level(self.level_number)
+            self.status = 'loss'
 
 
     def run(self):
         self.display_surface.blit(self.background,(0,0))
-        self.tiles.update(self.world_shift)
-        self.tiles.draw(self.display_surface)
-        self.scroll_x()
+        if self.status == 'loss':
+            self.display_surface.blit(self.text_font.render('You Lose',False,'Blue'),(480,50))
+            #botao para tentar novamente
+            #botao para voltar ao menu
+        elif self.status == 'won':
+            self.display_surface.blit(self.text_font.render('You Won', False, 'Blue'),(480,50))
+            #Display do clear_time e do won_time
+            #botao para ir pro proximo nivel
+            #botao para voltar ao menu
+        else:
+            self.tiles.update(self.world_shift)
+            self.tiles.draw(self.display_surface)
+            self.scroll_x()
 
-        self.mirrors.update(self.world_shift)
-        self.mirrors.draw(self.display_surface)
+            self.mirrors.update(self.world_shift)
+            self.mirrors.draw(self.display_surface)
 
-        self.spikes.update(self.world_shift)
-        self.spikes.draw(self.display_surface)
+            self.spikes.update(self.world_shift)
+            self.spikes.draw(self.display_surface)
 
-        self.exit.update(self.world_shift)
-        self.exit.draw(self.display_surface)
+            self.exit.update(self.world_shift)
+            self.exit.draw(self.display_surface)
 
-        self.player.draw(self.display_surface)
-        self.player.update(self.display_surface)
-        self.player_movement()
-        
-        self.mirror_colission_weapon()
-        self.input_return()
-        self.display_timer()
-        self.display_surface.blit(self.mirror_count_surface,(100,50))
-        self.death()
-        self.next_level()
+            self.player.draw(self.display_surface)
+            self.player.update(self.display_surface)
+            self.player_movement()
+            
+            self.mirror_colission_weapon()
+            self.input_return()
+            self.display_timer()
+            self.display_surface.blit(self.mirror_count_surface,(100,50))
+            self.death()
+            self.next_level()
 
