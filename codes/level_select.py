@@ -22,7 +22,12 @@ class LevelSelect():
     def create_level_buttons(self, level_achieved, create_level):
         for i in range(level_achieved+1):
             string = str(i+1)
-            self.buttons.add(Button('assets/level'+string+'Button_fade.png','assets/level'+string+'Button_full.png',(0 + i*(500),0), create_level, i))
+            if i < 4:
+                self.buttons.add(Button('assets/level'+string+'Button_fade.png','assets/level'+string+'Button_full.png',(20 + i*(400), 20), create_level, i))
+            elif i < 8:
+                self.buttons.add(Button('assets/level'+string+'Button_fade.png','assets/level'+string+'Button_full.png',(20 + (i%4)*(400), 200), create_level, i))
+            elif i < 12:
+                self.buttons.add(Button('assets/level'+string+'Button_fade.png','assets/level'+string+'Button_full.png',(20 + (i%4)*(400), 380), create_level, i))
 
 
     def input_return(self):
