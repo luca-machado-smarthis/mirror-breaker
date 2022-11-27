@@ -19,6 +19,8 @@ class Level:
         self.create_level = create_level # Depois usar quando terminar a fase para poder ir para proxima
 
         #Groups
+        self.buttons_loss = pygame.sprite.Group()
+        self.buttons_win = pygame.sprite.Group()
         self.tiles = pygame.sprite.Group()
         self.mirrors = pygame.sprite.Group()
         self.spikes = pygame.sprite.Group()
@@ -33,6 +35,7 @@ class Level:
 
         #Set-up
         self.setup_level(level_maps[level_number])
+        self.ad_buttons()
         self.mirror_count_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')#Tem que vir dps do setup pelo mirror_quant
         self.time = timer_maps[level_number]
         self.start_time = pygame.time.get_ticks()
@@ -69,7 +72,13 @@ class Level:
                     elif cell == 'E':
                         exit_sprite = Exit((col_index * tile_size, (row_index+1) * tile_size ))
                         self.exit.add(exit_sprite)
-        
+    
+
+    def ad_buttons(self):
+        self.buttons_loss.add(Button('assets/retryButton_fade.png','assets/retryButton_full.png',(screen_width/2 - 90, 200), self.create_level, self.level_number))
+        self.buttons_loss.add(Button('assets/menuButton_fade.png','assets/menuButton_full.png',(screen_width/2 - 90, 350), self.create_menu, self.level_number))
+        self.buttons_win.add(Button('assets/nextLevelButton_fade.png','assets/nextLevelButton_full.png',(screen_width/2 - 90, 300), self.create_level, self.level_number+1))
+        self.buttons_win.add(Button('assets/menuButton_fade.png','assets/menuButton_full.png',(screen_width/2 - 90, 450), self.create_menu, self.level_number+1))
 
     def scroll_x(self):
         player = self.player.sprite
@@ -103,7 +112,10 @@ class Level:
     def input_return(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
-            self.create_menu(self.level_number)
+            if self.status == 'won':
+                self.create_menu(self.level_number + 1)
+            else:
+                self.create_menu(self.level_number)
 
 
     def horizontal_movement_collision(self):
@@ -184,14 +196,14 @@ class Level:
     def run(self):
         self.display_surface.blit(self.background,(0,0))
         if self.status == 'loss':
-            self.display_surface.blit(self.text_font.render('You Lose',False,'Blue'),(480,50))
-            #botao para tentar novamente
-            #botao para voltar ao menu
+            self.display_surface.blit(self.text_font.render('You Lose',False,'Blue'),(450,50))
+            self.buttons_loss.draw(self.display_surface)
+            self.buttons_loss.update()
         elif self.status == 'won':
-            self.display_surface.blit(self.text_font.render('You Won', False, 'Blue'),(480,50))
+            self.display_surface.blit(self.text_font.render('You Won', False, 'Blue'),(450,50))
             #Display do clear_time e do won_time
-            #botao para ir pro proximo nivel
-            #botao para voltar ao menu
+            self.buttons_win.draw(self.display_surface)
+            self.buttons_win.update()
         else:
             self.tiles.update(self.world_shift)
             self.tiles.draw(self.display_surface)
@@ -211,9 +223,9 @@ class Level:
             self.player_movement()
             
             self.mirror_colission_weapon()
-            self.input_return()
             self.display_timer()
             self.display_surface.blit(self.mirror_count_surface,(100,50))
             self.death()
             self.next_level()
+        self.input_return()
 
