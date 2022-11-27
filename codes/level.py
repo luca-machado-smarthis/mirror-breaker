@@ -218,9 +218,10 @@ class Level:
             self.exit.update(self.world_shift)
             self.exit.draw(self.display_surface)
 
+            self.player_movement()
             self.player.draw(self.display_surface)
             self.player.update(self.display_surface)
-            self.player_movement()
+            #self.player_movement()  Isso aqui depois que tava bugando as colisoes, afinal as colisoes tem que ser antes de dar draw ou update
             
             self.mirror_colission_weapon()
             self.display_timer()
