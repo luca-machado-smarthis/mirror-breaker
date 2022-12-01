@@ -72,7 +72,7 @@ class Level:
                     elif cell == 'E':
                         exit_sprite = Exit((col_index * tile_size, (row_index+1) * tile_size ))
                         self.exit.add(exit_sprite)
-    
+        
 
     def ad_buttons(self):
         self.buttons_loss.add(Button('assets/retryButton_fade.png','assets/retryButton_full.png',(screen_width/2 - 90, 200), self.create_level, self.level_number))
@@ -112,10 +112,7 @@ class Level:
     def input_return(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
-            if self.status == 'won':
-                self.create_menu(self.level_number + 1)
-            else:
-                self.create_menu(self.level_number)
+            self.create_menu(self.level_number)
 
 
     def horizontal_movement_collision(self):
