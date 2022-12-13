@@ -1,14 +1,22 @@
 import pygame
 from weapon import Weapon
+from utils import import_folder
+import math
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
-        self.image = pygame.image.load('assets/idle_1teste.png').convert_alpha()
+        self.import_character_assets()
+        self.frame_index = 0
+        self.animation_speed = 0.15
+        #self.image = self.animations['idle'][self.frame_index].convert_alpha()
+        self.image = pygame.image.load('assets/character/idle/idle1.png').convert_alpha()
+        self.state = 'idle'
+        self.orientation = 'right'
+
         self.rect = self.image.get_rect(topleft=pos)
-        image_copy = self.image.copy()
-        self.image_normal = self.image
-        self.image_reverse = pygame.transform.flip(image_copy, True, False)
+        # self.image_normal = self.image
+        # self.image_reverse = pygame.transform.flip(self.image.copy(), True, False)
 
         self.direction = pygame.math.Vector2(0, 0) # só para não ter qur criar 2 variáveis
         self.speed = 6
@@ -29,8 +37,10 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.direction.x = 1
+            self.orientation = 'right'
         elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.direction.x = -1
+            self.orientation = 'left'
         else:
             self.direction.x = 0
         if keys[pygame.K_SPACE]:
@@ -57,7 +67,7 @@ class Player(pygame.sprite.Sprite):
 
     def wall_jump(self):
         self.direction.x = self.wall_jump_direction
-        self.direction.y = self.jump_speed*0.8
+        self.direction.y = self.jump_speed * self.gravity
     
     def aggresion(self, time):
         if self.attack and self.timing <= 300 :
@@ -68,17 +78,42 @@ class Player(pygame.sprite.Sprite):
                 self.timing = 600
                 self.click = True
     
-    def change_image(self):
-        if self.direction.x > 0:
-            self.image = self.image_normal
-        if self.direction.x < 0:
-            self.image = self.image_reverse
+    def animate(self):
 
+        print(self.direction.y)
+        if self.direction.y < 0:
+          self.state = 'jump'
+        elif self.direction.y > 0.8:
+            self.state = 'fall'
+        elif int(self.direction.x) != 0:
+            self.state = 'walk'
+        else:
+            self.state = 'idle'
+
+        animation = self.animations[self.state]
+
+        self.frame_index += self.animation_speed
+
+        if self.frame_index >= len(animation):
+            self.frame_index = 0
+        
+        if self.orientation == 'right':
+            self.image = animation[math.floor(self.frame_index)]
+        else:
+            self.image = pygame.transform.flip(animation[math.floor(self.frame_index)],True,False)
+
+
+    def import_character_assets(self):
+        character_path = 'assets/character/'
+        self.animations = {'idle':[], 'walk':[], 'jump':[], 'fall':[]}
+        for animation in self.animations.keys():
+            full_path = character_path + animation
+            self.animations[animation] = import_folder(full_path)
 
     def update(self,surface):
         time_passed = self.time - pygame.time.get_ticks()
         self.get_input()
-        self.change_image()
+        self.animate()
         self.weapon.update((self.rect.left, self.rect.top), self.attack, self.direction.x)
         self.weapon.draw(surface)
         self.aggresion(time_passed)
