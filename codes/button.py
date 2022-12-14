@@ -1,5 +1,6 @@
 import pygame
 
+
 class Button(pygame.sprite.Sprite):
     def __init__(self, image_fade, image_full, position, action, info = None):
         super().__init__()
@@ -32,8 +33,8 @@ class Button(pygame.sprite.Sprite):
         if self.collision_mice():
             self.image = self.image_full
             if self.get_click():
-                self.click = False #So quero que posso ser clicado uma vez mesmo, todo botao que é clicado faz movimentacao de janela
-                if self.info == None:
+                self.click = False  # So quero que posso ser clicado uma vez mesmo, todo botao que é clicado faz movimentacao de janela
+                if self.info is None:
                     self.action()
                 else:
                     self.action(self.info)

@@ -10,45 +10,50 @@ from exit import Exit
 from button import Button
 from setting import level_maps, firebreathers_orientations
 from golem import Golem, GolemMarker
+
+
 class Level:
     def __init__(self, surface, create_menu, create_level, level_number):
-        #Cores
+        # Cores
         self.display_surface = surface
-        self.background = pygame.image.load('assets/background.jpg').convert_alpha()
+        self.background = pygame.image.load(
+            'assets/background.jpg').convert_alpha()
         self.text_font = pygame.font.Font(None, 100)
-        self.create_menu = create_menu # Depois usar para retornar ao menu
-        self.create_level = create_level # Depois usar quando terminar a fase para poder ir para proxima
+        self.create_menu = create_menu  # Depois usar para retornar ao menu
+        # Depois usar quando terminar a fase para poder ir para proxima
+        self.create_level = create_level
 
-
-        #Groups
+        # Groups
         self.buttons_loss = pygame.sprite.Group()
         self.buttons_win = pygame.sprite.Group()
         self.tiles = pygame.sprite.Group()
         self.mirrors = pygame.sprite.Group()
         self.spikes = pygame.sprite.Group()
         self.fire_breathers = pygame.sprite.Group()
-        self.firebreathers_orientation = firebreathers_orientations[level_number].copy()
+        self.firebreathers_orientation = firebreathers_orientations[level_number].copy(
+        )
         self.firewalls = pygame.sprite.Group()
         self.golems = pygame.sprite.Group()
         self.golem_markers = pygame.sprite.Group()
         self.exit = pygame.sprite.GroupSingle()
-        self.player = pygame.sprite.GroupSingle()  # sempre cria um grupo (mesmo que solitário) e depois instancia e  adiciona
+        # sempre cria um grupo (mesmo que solitário) e depois instancia e  adiciona
+        self.player = pygame.sprite.GroupSingle()
 
-        #Integers
+        # Integers
         self.world_shift = 0
         self.mirror_quant = 0
         self.mirror_broken = 0
-        self.level_number = level_number#Next level seria isso + 1
+        self.level_number = level_number  # Next level seria isso + 1
 
-        #Set-up
+        # Set-up
         self.setup_level(level_maps[level_number])
         self.ad_buttons()
-        self.mirror_count_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')#Tem que vir dps do setup pelo mirror_quant
+        self.mirror_count_surface = self.text_font.render(
+            f'{self.mirror_broken}/{self.mirror_quant}', False, (0, 0, 255))  # Tem que vir dps do setup pelo mirror_quant
         self.time = timer_maps[level_number]
         self.start_time = pygame.time.get_ticks()
         self.status = 'run'
 
-        
     def setup_level(self, layout):
         for row_index, row in enumerate(layout):
             row_index -= 1
@@ -56,61 +61,79 @@ class Level:
                 if row_index == -1:
                     for i in range(2):
                         for j in range(2):
-                            tile = Tile((col_index * tile_size + i*28, row_index * tile_size + j*28 - 56))
+                            tile = Tile((col_index * tile_size + i*28,
+                                        row_index * tile_size + j*28 - 56))
                             self.tiles.add(tile)
                 else:
                     if cell == 'x' or cell == 'X':
                         for i in range(2):
                             for j in range(2):
-                                tile = Tile((col_index * tile_size + i*28, row_index * tile_size + j*28))
+                                tile = Tile(
+                                    (col_index * tile_size + i*28, row_index * tile_size + j*28))
                                 self.tiles.add(tile)
                     elif cell == 'P':
-                        player_sprite = Player((col_index * tile_size, row_index * tile_size ))
+                        player_sprite = Player(
+                            (col_index * tile_size, row_index * tile_size))
                         self.player.add(player_sprite)
-                        #Tem que arranjar um jeito de começar a camera no player
+                        # Tem que arranjar um jeito de começar a camera no player
                     elif cell == 'M':
-                        mirror = Mirror((col_index * tile_size, (row_index-1) * tile_size ))
+                        mirror = Mirror(
+                            (col_index * tile_size, (row_index-1) * tile_size))
                         self.mirrors.add(mirror)
                         self.mirror_quant += 1
                     elif cell == 's':
                         for i in range(4):
-                            spike = Spike((col_index * tile_size + i*14, (row_index+1) * tile_size))
+                            spike = Spike(
+                                (col_index * tile_size + i*14, (row_index+1) * tile_size))
                             self.spikes.add(spike)
                     elif cell == 'F':
                         for i in range(2):
                             for j in range(2):
-                                tilefb = Tile((col_index * tile_size + i*28, (row_index+1) * tile_size + j*28 - 56)) #PORQUE TEM QUE POR +1 AQUI????
+                                # PORQUE TEM QUE POR +1 AQUI????
+                                tilefb = Tile(
+                                    (col_index * tile_size + i*28, (row_index+1) * tile_size + j*28 - 56))
                                 self.tiles.add(tilefb)
-                        fire_breather_sprite = FireBreather(pos=(col_index * tile_size+3, (row_index+1) * tile_size-3 ), orientation=self.firebreathers_orientation[0])
+                        fire_breather_sprite = FireBreather(pos=(
+                            col_index * tile_size+3, (row_index+1) * tile_size-3), orientation=self.firebreathers_orientation[0])
                         self.firebreathers_orientation.pop(0)
                         self.fire_breathers.add(fire_breather_sprite)
                     elif cell == 'W':
                         for i in range(2):
                             for j in range(2):
-                                tilemk = Tile((col_index * tile_size + i*28, (row_index+1) * tile_size + j*28 - 56)) #PORQUE TEM QUE POR +1 AQUI????
+                                # PORQUE TEM QUE POR +1 AQUI????
+                                tilemk = Tile(
+                                    (col_index * tile_size + i*28, (row_index+1) * tile_size + j*28 - 56))
                                 self.tiles.add(tilemk)
-                        marker = GolemMarker((col_index * tile_size, (row_index+1) * tile_size ))
+                        marker = GolemMarker(
+                            (col_index * tile_size, (row_index+1) * tile_size))
                         self.golem_markers.add(marker)
                     elif cell == 'w':
-                        marker = GolemMarker((col_index * tile_size, (row_index+1) * tile_size ))
+                        marker = GolemMarker(
+                            (col_index * tile_size, (row_index+1) * tile_size))
                         self.golem_markers.add(marker)
                     elif cell == 'G':
-                        golem = Golem((col_index * tile_size, (row_index+1) * tile_size ))
+                        golem = Golem(
+                            (col_index * tile_size, (row_index+1) * tile_size))
                         self.golems.add(golem)
                     elif cell == 'E':
-                        exit_sprite = Exit((col_index * tile_size, (row_index+1) * tile_size ))
+                        exit_sprite = Exit(
+                            (col_index * tile_size, (row_index+1) * tile_size))
                         self.exit.add(exit_sprite)
         for fb in self.fire_breathers:
             firewall = FireWall(pos=(fb.pos), orientation=fb.orientation)
             self.firewalls.add(firewall)
-        self.firebreathers_orientation = firebreathers_orientations[self.level_number].copy()
-
+        self.firebreathers_orientation = firebreathers_orientations[self.level_number].copy(
+        )
 
     def ad_buttons(self):
-        self.buttons_loss.add(Button('assets/button/retryButton_fade.png','assets/button/retryButton_full.png',(screen_width/2 - 90, 200), self.create_level, self.level_number))
-        self.buttons_loss.add(Button('assets/button/menuButton_fade.png','assets/button/menuButton_full.png',(screen_width/2 - 90, 350), self.create_menu, self.level_number))
-        self.buttons_win.add(Button('assets/button/nextLevelButton_fade.png','assets/button/nextLevelButton_full.png',(screen_width/2 - 90, 300), self.create_level, self.level_number+1))
-        self.buttons_win.add(Button('assets/button/menuButton_fade.png','assets/button/menuButton_full.png',(screen_width/2 - 90, 450), self.create_menu, self.level_number+1))
+        self.buttons_loss.add(Button('assets/button/retryButton_fade.png', 'assets/button/retryButton_full.png',
+                              (screen_width/2 - 90, 200), self.create_level, self.level_number))
+        self.buttons_loss.add(Button('assets/button/menuButton_fade.png', 'assets/button/menuButton_full.png',
+                              (screen_width/2 - 90, 350), self.create_menu, self.level_number))
+        self.buttons_win.add(Button('assets/button/nextLevelButton_fade.png', 'assets/button/nextLevelButton_full.png',
+                             (screen_width/2 - 90, 300), self.create_level, self.level_number+1))
+        self.buttons_win.add(Button('assets/button/menuButton_fade.png', 'assets/button/menuButton_full.png',
+                             (screen_width/2 - 90, 450), self.create_menu, self.level_number+1))
 
     def scroll_x(self):
         player = self.player.sprite
@@ -126,35 +149,32 @@ class Level:
             self.world_shift = 0
             player.speed = 8
 
-
     def vertical_movement_collision(self):
         player = self.player.sprite
         player.apply_gravity()
-        for sprite in self.tiles.sprites():  #todo adicionar wallJUmp
+        for sprite in self.tiles.sprites():  # todo adicionar wallJUmp
             if sprite.rect.colliderect(player.rect):
-                if player.direction.y < 0: # melhor forma de ver com o que se está colidindo
+                if player.direction.y < 0:  # melhor forma de ver com o que se está colidindo
                     player.rect.top = sprite.rect.bottom
                     player.reset_vertical_momentum()
                 elif player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
                     player.can_jump = True
                     player.reset_vertical_momentum()
-    
 
     def input_return(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
             self.create_menu(self.level_number)
 
-
     def horizontal_movement_collision(self):
         player = self.player.sprite
         player.rect.x += player.direction.x * player.speed
         player.gravity = 0.8
         player.can_wall_jump = False
-        for sprite in self.tiles.sprites(): #todo consertar walljump após saber usar temporizador
+        for sprite in self.tiles.sprites():  # todo consertar walljump após saber usar temporizador
             if sprite.rect.colliderect(player.rect):
-                if player.direction.x < 0: # melhor forma de ver com o que se está colidindo
+                if player.direction.x < 0:  # melhor forma de ver com o que se está colidindo
                     player.rect.left = sprite.rect.right
                     self.vertical_movement_collision()
                     player.gravity = 0.3
@@ -169,20 +189,18 @@ class Level:
                     player.can_wall_jump = True
                     player.wall_jump_direction = -6
 
-
     def player_movement(self):
         self.horizontal_movement_collision()
         self.vertical_movement_collision()
 
-    
     def display_timer(self):
         time_passed = pygame.time.get_ticks() - self.start_time
-        self.time_surface = self.text_font.render(f'{(self.time - time_passed)/1000:.2f}', False, 'Blue')
+        self.time_surface = self.text_font.render(
+            f'{(self.time - time_passed)/1000:.2f}', False, (0, 0, 255))
         if self.time - time_passed <= 0:
             self.status = 'loss'
-        self.display_surface.blit(self.time_surface, (1000,50))
-        
-        
+        self.display_surface.blit(self.time_surface, (1000, 50))
+
     def mirror_colission_weapon(self):
         player = self.player.sprite
         if player.attack:
@@ -194,58 +212,55 @@ class Level:
                     mirror.change_image_broken()
                     self.mirror_broken += 1
                     self.win_condition()
-                    self.mirror_count_surface = self.text_font.render(f'{self.mirror_broken}/{self.mirror_quant}', False, 'Blue')
+                    self.mirror_count_surface = self.text_font.render(
+                        f'{self.mirror_broken}/{self.mirror_quant}', False, (0, 0, 255))
                     break
-                    
 
     def win_condition(self):
         if self.mirror_quant == self.mirror_broken:
-            self.status = 'clear' 
+            self.status = 'clear'
             exit = self.exit.sprite
             exit.open_exit()
-            self.clear_time = True #toDo armazenar o tempo de clear
+            self.clear_time = True  # toDo armazenar o tempo de clear
 
-    
     def next_level(self):
         if self.status == 'clear':
             player = self.player.sprite
             exit = self.exit.sprite
             if player.rect.colliderect(exit.rect):
                 self.status = 'won'
-                self.won_time = True #toDo armazenar o tempo total que demorou até saida da fase
+                self.won_time = True  # toDo armazenar o tempo total que demorou até saida da fase
 
     def golem_collide(self):
         for golem in self.golems:
             if pygame.sprite.spritecollide(golem, self.golem_markers, False):
                 golem.reverse()
-            
 
     def death(self):
         player = self.player.sprite
         if pygame.sprite.spritecollide(player, self.spikes, False):
             self.status = 'loss'
-        
+
         if pygame.sprite.spritecollide(player, self.firewalls, False):
             if self.firewalls.sprites() and self.firewalls.sprites()[0].active:
                 self.status = 'loss'
         if pygame.sprite.spritecollide(player, self.golems, False):
-                self.status = 'loss'
-
-
+            self.status = 'loss'
 
         if player.rect.top >= screen_height:
             self.status = 'loss'
 
-
     def run(self):
-        self.display_surface.blit(self.background,(0,0))
+        self.display_surface.blit(self.background, (0, 0))
         if self.status == 'loss':
-            self.display_surface.blit(self.text_font.render('You Lose',False,'Blue'),(450,50))
+            self.display_surface.blit(self.text_font.render(
+                'You Lose', False, (0, 0, 255)), (450, 50))
             self.buttons_loss.draw(self.display_surface)
             self.buttons_loss.update()
         elif self.status == 'won':
-            self.display_surface.blit(self.text_font.render('You Won', False, 'Blue'),(450,50))
-            #Display do clear_time e do won_time
+            self.display_surface.blit(self.text_font.render(
+                'You Won', False, (0, 0, 255)), (450, 50))
+            # Display do clear_time e do won_time
             self.buttons_win.draw(self.display_surface)
             self.buttons_win.update()
         else:
@@ -277,12 +292,11 @@ class Level:
             self.player_movement()
             self.player.draw(self.display_surface)
             self.player.update(self.display_surface)
-            #self.player_movement()  Isso aqui depois que tava bugando as colisoes, afinal as colisoes tem que ser antes de dar draw ou update
-            
+            # self.player_movement()  Isso aqui depois que tava bugando as colisoes, afinal as colisoes tem que ser antes de dar draw ou update
+
             self.mirror_colission_weapon()
             self.display_timer()
-            self.display_surface.blit(self.mirror_count_surface,(100,50))
+            self.display_surface.blit(self.mirror_count_surface, (100, 50))
             self.death()
             self.next_level()
         self.input_return()
-
