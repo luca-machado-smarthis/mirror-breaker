@@ -8,7 +8,7 @@ from spike import Spike
 from fireBreather import FireBreather, FireWall
 from exit import Exit
 from button import Button
-from setting import level_maps
+from setting import level_maps, firebreathers_orientations
 
 class Level:
     def __init__(self, surface, create_menu, create_level, level_number):
@@ -19,6 +19,7 @@ class Level:
         self.create_menu = create_menu # Depois usar para retornar ao menu
         self.create_level = create_level # Depois usar quando terminar a fase para poder ir para proxima
 
+
         #Groups
         self.buttons_loss = pygame.sprite.Group()
         self.buttons_win = pygame.sprite.Group()
@@ -26,6 +27,7 @@ class Level:
         self.mirrors = pygame.sprite.Group()
         self.spikes = pygame.sprite.Group()
         self.fire_breathers = pygame.sprite.Group()
+        self.firebreathers_orientation = firebreathers_orientations[level_number].copy()
         self.firewalls = pygame.sprite.Group()
         self.exit = pygame.sprite.GroupSingle()
         self.player = pygame.sprite.GroupSingle()  # sempre cria um grupo (mesmo que solitário) e depois instancia e  adiciona
@@ -77,14 +79,17 @@ class Level:
                             for j in range(2):
                                 tilefb = Tile((col_index * tile_size + i*28, (row_index+1) * tile_size + j*28 - 56)) #PORQUE TEM QUE POR +1 AQUI????
                                 self.tiles.add(tilefb)
-                        fire_breather_sprite = FireBreather(pos=(col_index * tile_size+3, (row_index+1) * tile_size-3 ))
+                        fire_breather_sprite = FireBreather(pos=(col_index * tile_size+3, (row_index+1) * tile_size-3 ), orientation=self.firebreathers_orientation[0])
+                        self.firebreathers_orientation.pop(0)
                         self.fire_breathers.add(fire_breather_sprite)
                     elif cell == 'E':
                         exit_sprite = Exit((col_index * tile_size, (row_index+1) * tile_size ))
                         self.exit.add(exit_sprite)
         for fb in self.fire_breathers:
-            firewall = FireWall(pos=(fb.pos[0] + fb.image.get_width() + 5, fb.pos[1]))
+            firewall = FireWall(pos=(fb.pos), orientation=fb.orientation)
             self.firewalls.add(firewall)
+        self.firebreathers_orientation = firebreathers_orientations[self.level_number].copy()
+
 
     def ad_buttons(self):
         self.buttons_loss.add(Button('assets/button/retryButton_fade.png','assets/button/retryButton_full.png',(screen_width/2 - 90, 200), self.create_level, self.level_number))
