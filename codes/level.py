@@ -195,9 +195,13 @@ class Level:
 
     def death(self):
         player = self.player.sprite
-        for spike in self.spikes:
-            if player.rect.colliderect(spike.rect):
+        if pygame.sprite.spritecollide(player, self.spikes, False):
+            self.status = 'loss'
+        
+        if pygame.sprite.spritecollide(player, self.firewalls, False):
+            if self.firewalls.sprites() and self.firewalls.sprites()[0].active:
                 self.status = 'loss'
+
         if player.rect.top >= screen_height:
             self.status = 'loss'
 
@@ -228,7 +232,8 @@ class Level:
             self.fire_breathers.draw(self.display_surface)
 
             self.firewalls.update(self.world_shift)
-            self.firewalls.draw(self.display_surface)
+            if self.firewalls.sprites() and self.firewalls.sprites()[0].active:
+                self.firewalls.draw(self.display_surface)
 
             self.exit.update(self.world_shift)
             self.exit.draw(self.display_surface)

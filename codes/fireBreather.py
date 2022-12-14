@@ -20,6 +20,10 @@ class FireWall(pygame.sprite.Sprite):
         self.animations = import_folder('assets/hazards/firewall')
         self.image = pygame.transform.rotate(pygame.image.load('assets/hazards/firewall/firewall1.png'), -90).convert_alpha()
         self.rect = self.image.get_rect(bottomleft=pos)
+        self.cooldown = 10
+        self.duration = 5
+        self.timer = 0
+        self.active = True
     
     def animate(self):
 
@@ -33,3 +37,13 @@ class FireWall(pygame.sprite.Sprite):
     def update(self, x_shift):
         self.rect.x += x_shift
         self.animate()
+        if self.active: #potencial de melhora ao trocar ver depois
+            self.timer += self.animation_speed
+            if self.timer > self.duration:
+                self.active = False
+                self.timer = 0
+        else:
+            self.timer += self.animation_speed
+            if self.timer > self.cooldown:
+                self.active = True
+                self.timer = 0
