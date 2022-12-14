@@ -1,14 +1,14 @@
 level_map1 = [
     'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   ', #Sempre botar esse layer superior para evitar sair pulando para fora da tela
     'x                                      xxxxxxxx   ',
-    'x                             M        xxxxxxxx   ',
+    'x     W G  w                    M        xxxxxxxx   ',
     'xM     xxxx    xFxx        xxxx        xxxxxxxx   ',
     'xxxx                    s              xxxxxxxx   ',
     '                     xxxx              xxxxxxxx   ',
     '           xxxx                          xxxxx    ',
-    'F                   M                   E xxxxx   ',
+    'F                  M                   E xxxxx   ',
     'F       xxx       xxx            xxxxxxxxxxxxxx   ',
-    'F                 xx     ss      xxxxxxxxxxxxxx   ',
+    'F                 xx    ss      xxxxxxxxxxxxxx   ',
     'F   P                    xxx     xxxxxxxxxxxxxx   ',
     'xxxxxxxxxxxx xx                  xxxxxxxxxxxxxx   ',
     'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' #Sempre botar esse layer inferior para caso esteja deslizando pela parede so morre quando o boneco todo cair da tela

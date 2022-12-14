@@ -79,8 +79,7 @@ class Player(pygame.sprite.Sprite):
                 self.click = True
     
     def animate(self):
-
-        print(self.direction.y)
+        
         if self.direction.y < 0:
           self.state = 'jump'
         elif self.direction.y > 0.8:

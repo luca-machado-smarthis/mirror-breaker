@@ -9,7 +9,7 @@ from fireBreather import FireBreather, FireWall
 from exit import Exit
 from button import Button
 from setting import level_maps, firebreathers_orientations
-
+from golem import Golem, GolemMarker
 class Level:
     def __init__(self, surface, create_menu, create_level, level_number):
         #Cores
@@ -29,6 +29,8 @@ class Level:
         self.fire_breathers = pygame.sprite.Group()
         self.firebreathers_orientation = firebreathers_orientations[level_number].copy()
         self.firewalls = pygame.sprite.Group()
+        self.golems = pygame.sprite.Group()
+        self.golem_markers = pygame.sprite.Group()
         self.exit = pygame.sprite.GroupSingle()
         self.player = pygame.sprite.GroupSingle()  # sempre cria um grupo (mesmo que solitário) e depois instancia e  adiciona
 
@@ -82,6 +84,19 @@ class Level:
                         fire_breather_sprite = FireBreather(pos=(col_index * tile_size+3, (row_index+1) * tile_size-3 ), orientation=self.firebreathers_orientation[0])
                         self.firebreathers_orientation.pop(0)
                         self.fire_breathers.add(fire_breather_sprite)
+                    elif cell == 'W':
+                        for i in range(2):
+                            for j in range(2):
+                                tilemk = Tile((col_index * tile_size + i*28, (row_index+1) * tile_size + j*28 - 56)) #PORQUE TEM QUE POR +1 AQUI????
+                                self.tiles.add(tilemk)
+                        marker = GolemMarker((col_index * tile_size, (row_index+1) * tile_size ))
+                        self.golem_markers.add(marker)
+                    elif cell == 'w':
+                        marker = GolemMarker((col_index * tile_size, (row_index+1) * tile_size ))
+                        self.golem_markers.add(marker)
+                    elif cell == 'G':
+                        golem = Golem((col_index * tile_size, (row_index+1) * tile_size ))
+                        self.golems.add(golem)
                     elif cell == 'E':
                         exit_sprite = Exit((col_index * tile_size, (row_index+1) * tile_size ))
                         self.exit.add(exit_sprite)
@@ -173,6 +188,7 @@ class Level:
         if player.attack:
             mirrors = self.mirrors.sprites()
             weapon = player.weapon.sprite
+            pygame.sprite.spritecollide(weapon, self.golems, True)
             for mirror in mirrors:
                 if mirror.rect.colliderect(weapon.rect) and mirror.status:
                     mirror.change_image_broken()
@@ -198,6 +214,12 @@ class Level:
                 self.status = 'won'
                 self.won_time = True #toDo armazenar o tempo total que demorou até saida da fase
 
+    def golem_collide(self):
+        for golem in self.golems:
+            if pygame.sprite.spritecollide(golem, self.golem_markers, False):
+                golem.reverse()
+            
+
     def death(self):
         player = self.player.sprite
         if pygame.sprite.spritecollide(player, self.spikes, False):
@@ -206,6 +228,10 @@ class Level:
         if pygame.sprite.spritecollide(player, self.firewalls, False):
             if self.firewalls.sprites() and self.firewalls.sprites()[0].active:
                 self.status = 'loss'
+        if pygame.sprite.spritecollide(player, self.golems, False):
+                self.status = 'loss'
+
+
 
         if player.rect.top >= screen_height:
             self.status = 'loss'
@@ -235,6 +261,11 @@ class Level:
 
             self.fire_breathers.update(self.world_shift)
             self.fire_breathers.draw(self.display_surface)
+
+            self.golem_collide()
+            self.golems.update(self.world_shift)
+            self.golems.draw(self.display_surface)
+            self.golem_markers.update(self.world_shift)
 
             self.firewalls.update(self.world_shift)
             if self.firewalls.sprites() and self.firewalls.sprites()[0].active:
