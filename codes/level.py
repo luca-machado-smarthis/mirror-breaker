@@ -5,6 +5,7 @@ from setting import *
 from tiles import Tile
 from mirror import Mirror
 from spike import Spike
+from fireBreather import FireBreather, FireWall
 from exit import Exit
 from button import Button
 from setting import level_maps
@@ -24,6 +25,8 @@ class Level:
         self.tiles = pygame.sprite.Group()
         self.mirrors = pygame.sprite.Group()
         self.spikes = pygame.sprite.Group()
+        self.fire_breathers = pygame.sprite.Group()
+        self.firewalls = pygame.sprite.Group()
         self.exit = pygame.sprite.GroupSingle()
         self.player = pygame.sprite.GroupSingle()  # sempre cria um grupo (mesmo que solitário) e depois instancia e  adiciona
 
@@ -69,16 +72,25 @@ class Level:
                         for i in range(4):
                             spike = Spike((col_index * tile_size + i*14, (row_index+1) * tile_size))
                             self.spikes.add(spike)
+                    elif cell == 'F':
+                        for i in range(2):
+                            for j in range(2):
+                                tilefb = Tile((col_index * tile_size + i*28, (row_index+1) * tile_size + j*28 - 56)) #PORQUE TEM QUE POR +1 AQUI????
+                                self.tiles.add(tilefb)
+                        fire_breather_sprite = FireBreather(pos=(col_index * tile_size+3, (row_index+1) * tile_size-3 ))
+                        self.fire_breathers.add(fire_breather_sprite)
                     elif cell == 'E':
                         exit_sprite = Exit((col_index * tile_size, (row_index+1) * tile_size ))
                         self.exit.add(exit_sprite)
-        
+        for fb in self.fire_breathers:
+            firewall = FireWall(pos=(fb.pos[0] + fb.image.get_width() + 5, fb.pos[1]))
+            self.firewalls.add(firewall)
 
     def ad_buttons(self):
-        self.buttons_loss.add(Button('assets/retryButton_fade.png','assets/retryButton_full.png',(screen_width/2 - 90, 200), self.create_level, self.level_number))
-        self.buttons_loss.add(Button('assets/menuButton_fade.png','assets/menuButton_full.png',(screen_width/2 - 90, 350), self.create_menu, self.level_number))
-        self.buttons_win.add(Button('assets/nextLevelButton_fade.png','assets/nextLevelButton_full.png',(screen_width/2 - 90, 300), self.create_level, self.level_number+1))
-        self.buttons_win.add(Button('assets/menuButton_fade.png','assets/menuButton_full.png',(screen_width/2 - 90, 450), self.create_menu, self.level_number+1))
+        self.buttons_loss.add(Button('assets/button/retryButton_fade.png','assets/button/retryButton_full.png',(screen_width/2 - 90, 200), self.create_level, self.level_number))
+        self.buttons_loss.add(Button('assets/button/menuButton_fade.png','assets/button/menuButton_full.png',(screen_width/2 - 90, 350), self.create_menu, self.level_number))
+        self.buttons_win.add(Button('assets/button/nextLevelButton_fade.png','assets/button/nextLevelButton_full.png',(screen_width/2 - 90, 300), self.create_level, self.level_number+1))
+        self.buttons_win.add(Button('assets/button/menuButton_fade.png','assets/button/menuButton_full.png',(screen_width/2 - 90, 450), self.create_menu, self.level_number+1))
 
     def scroll_x(self):
         player = self.player.sprite
@@ -211,6 +223,12 @@ class Level:
 
             self.spikes.update(self.world_shift)
             self.spikes.draw(self.display_surface)
+
+            self.fire_breathers.update(self.world_shift)
+            self.fire_breathers.draw(self.display_surface)
+
+            self.firewalls.update(self.world_shift)
+            self.firewalls.draw(self.display_surface)
 
             self.exit.update(self.world_shift)
             self.exit.draw(self.display_surface)

@@ -2,16 +2,16 @@ level_map1 = [
     'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   ', #Sempre botar esse layer superior para evitar sair pulando para fora da tela
     'x                                      xxxxxxxx   ',
     'x                             M        xxxxxxxx   ',
-    'xM     xxxx    xxxx        xxxx        xxxxxxxx   ',
+    'xM     xxxx    xFxx        xxxx        xxxxxxxx   ',
     'xxxx                    s              xxxxxxxx   ',
-    'x                    xxxx              xxxxxxxx   ',
-    'x           xxxx                          xxxxx   ',
-    'x                   M                   E xxxxx   ',
-    'x       xxx       xxx            xxxxxxxxxxxxxx   ',
-    'x                 xx     ss      xxxxxxxxxxxxxx   ',
-    'x  P                    xxx      xxxxxxxxxxxxxx   ',
+    '                     xxxx              xxxxxxxx   ',
+    '           xxxx                          xxxxx    ',
+    'F                   M                   E xxxxx   ',
+    'F       xxx       xxx            xxxxxxxxxxxxxx   ',
+    'F                 xx     ss      xxxxxxxxxxxxxx   ',
+    'F   P                    xxx     xxxxxxxxxxxxxx   ',
     'xxxxxxxxxxxx xx                  xxxxxxxxxxxxxx   ',
-    'x          x xx                  x            x   ' #Sempre botar esse layer inferior para caso esteja deslizando pela parede so morre quando o boneco todo cair da tela
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' #Sempre botar esse layer inferior para caso esteja deslizando pela parede so morre quando o boneco todo cair da tela
 ]
 
 level_map2 = [
