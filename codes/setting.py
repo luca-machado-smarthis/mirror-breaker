@@ -118,7 +118,7 @@ tile_size = 56
 screen_width = 1200
 screen_height = 12 * tile_size #numeros de linhas totais em todos as fases
 
-level_maps = [level_map1, level_map2, level_map3, level_map4, level_map5, level_map6, level_map7, level_map8]
+level_maps = [level_map1, level_map2, level_map3, level_map4, level_map5, level_map6, level_map7, level_map1]
 firebreathers_orientations = [['r','l','r','l','r','l','r','l'],
 ['r','l','r','l','r','l','r','l'],
 ['r','l','r','l','r','l','r','l'],

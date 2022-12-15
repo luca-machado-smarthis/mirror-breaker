@@ -53,6 +53,9 @@ class Level:
         self.time = timer_maps[level_number]
         self.start_time = pygame.time.get_ticks()
         self.status = 'run'
+        pygame.mixer.music.load('assets/music/mainTheme.ogg')
+        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.play(-1)
 
     def setup_level(self, layout):
         for row_index, row in enumerate(layout):
@@ -165,6 +168,7 @@ class Level:
     def input_return(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
+            pygame.mixer.music.pause()
             self.create_menu(self.level_number)
 
     def horizontal_movement_collision(self):
@@ -253,11 +257,13 @@ class Level:
     def run(self):
         self.display_surface.blit(self.background, (0, 0))
         if self.status == 'loss':
+            pygame.mixer.music.pause()
             self.display_surface.blit(self.text_font.render(
                 'You Lose', False, (0, 0, 255)), (450, 50))
             self.buttons_loss.draw(self.display_surface)
             self.buttons_loss.update()
         elif self.status == 'won':
+            pygame.mixer.music.pause()
             self.display_surface.blit(self.text_font.render(
                 'You Won', False, (0, 0, 255)), (450, 50))
             # Display do clear_time e do won_time
