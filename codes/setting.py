@@ -1,31 +1,64 @@
-level_map1 = [
-    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   ', #Sempre botar esse layer superior para evitar sair pulando para fora da tela
-    'x                                      xxxxxxxx   ',
-    'x     W G  w                    M        xxxxxxxx   ',
-    'xM     xxxx    xFxx        xxxx        xxxxxxxx   ',
-    'xxxx                    s              xxxxxxxx   ',
-    'x                     xxxx              xxxxxxxx   ',
-    'x           xxxx                          xxxxx    ',
-    'F                  M                   E xxxxx   ',
-    'F       xxx       xxx            xxxxxxxxxxxxxx   ',
-    'F                 xx    ss      xxxxxxxxxxxxxx   ',
-    'F   P                    xxx     xxxxxxxxxxxxxx   ',
-    'xxxxxxxxxxxx xx                  xxxxxxxxxxxxxx   ',
-    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' #Sempre botar esse layer inferior para caso esteja deslizando pela parede so morre quando o boneco todo cair da tela
+level_map1 = [ #done 15 SEGUNDOS    
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 
+    'x                                                 xxxx',
+    'x                                            M    xxxx',
+    'x                                            x    xxxx',
+    'x                                                 xxxx',
+    'x                                M       xxxxx    xxxx',
+    'xM              xxx             xxx              xxxxx',
+    'xxxx            xxx             xxx             xxxxxx',
+    'x               xxx             xxx           xxxxxxxx',
+    'x      xxx      xxx             xxx                xxx',
+    'xM  P           xxxSSSSSSSSSSSSSxxx M             Exxx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'  
 ]
 
-level_map2 = [
+level_map2 = [ #DONE
+    'x                                                    ',
+    'x                                                 xxx',
+    'x                                   SS            xxx',
+    'xES          SSS      S            xxxx       SS Mxxx',
+    'xxxxx     xxxxxxxx   xxxxM                   xxxxxxxx',
+    'x                        xxxx              SS     xxx',
+    'x                                 ss     xxxx     xxx',
+    'x                               xxxx              xxx',
+    'x                xxxx                             xxx',
+    'x            MSS                                  xxx',
+    'x   P    xxxxxxxSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSxxx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+]
+
+
+level_map3 = [ #possiveis ajustes
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    'x                                                xxxxx',
+    'x                                                xxxxx',
+    'x  Mw   G   Gw   w G    w        w     Gw        xxxxx',
+    'x  xxxxxxxxxx     xxxxxx          xxxxxx         xxxxx',
+    'x                               wG   w           xxxxx',
+    'x              M      w  G  w    xxxx   w G  w   xxxxx',
+    'x              xxxx    xxxxx             xxxx    xxxxx',
+    'x                                                xxxxx',
+    'x                                             xxxx  xx',
+    'xEw  P  G    M    G       G   M     G    W    G  wM xx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+]
+
+level_map4 = [
     'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    'xxxxx                                         xxxxx',
-    'xxxxx                                         xxxxx',
-    'xxxxx                                         xxxxx',
-    'xxxxx                                         xxxxx',
-    'xxxxx                                         xxxxx',
-    'xxxxx               xxxxxxxx                  xxxxx',
-    'xxxxx                                         xxxxx',
-    'xxxxx                                         xxxxx',
-    'xxxxx                                         xxxxx',
-    'xxxxxM    P                                  Mxxxxx',
+    'x                                                 x',
+    'x                                                 x',
+    'x                                                 x',
+    'x                                                 x',
+    'x                                                 x',
+    'x                                                 x',
+    'x                                                 x',
+    'x                                                 x',
+    'x                                                 x',
+    'x   P                                             x',
     'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
     'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 ]
@@ -34,7 +67,7 @@ tile_size = 56
 screen_width = 1200
 screen_height = 11 * tile_size #numeros de linhas totais em todos as fases
 
-level_maps = [level_map1, level_map2,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1] #Botei o mapa um no level2 so para testar o level_select
-firebreathers_orientations = [['r','r','l','r','l'],[],[],[],[],[],[],[],[],[],[],[]]
+level_maps = [level_map3, level_map2,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1] #Botei o mapa um no level2 so para testar o level_select
+firebreathers_orientations = [[],[],[],[],[],[],[],[],[],[],[],[]]
 
-timer_maps = [2000000,200000,2000000,200000,200000,200000,200000,20000,200000,200000,200000,200000]#tempo em milisegundos
+timer_maps = [2000000,20000,20000,200000,200000,200000,200000,20000,200000,200000,200000,200000]#tempo em milisegundos

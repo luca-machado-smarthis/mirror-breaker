@@ -12,7 +12,7 @@ class Golem(pygame.sprite.Sprite):
         self.animation_speed = 0.05
         self.speed = 1
         self.frame_index = 0
-        self.direction = 1
+        self.direction = -1
 
     def animate(self):
         self.frame_index += self.animation_speed

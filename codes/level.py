@@ -81,7 +81,7 @@ class Level:
                             (col_index * tile_size, (row_index-1) * tile_size))
                         self.mirrors.add(mirror)
                         self.mirror_quant += 1
-                    elif cell == 's':
+                    elif cell == 'S':
                         for i in range(4):
                             spike = Spike(
                                 (col_index * tile_size + i*14, (row_index+1) * tile_size))

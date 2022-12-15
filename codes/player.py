@@ -29,14 +29,14 @@ class Player(pygame.sprite.Sprite):
         self.wall_jump_direction = 0
 
         self.dashing = False
-        self.dash_charges = 10
+        self.dash_charges = 1
         self.dash_duration = 3
 
         self.weapon = pygame.sprite.GroupSingle()
         self.weapon.add(Weapon(pos, (self.image.get_width(),self.image.get_height())))
         self.attack = False
         self.click = True
-        self.timing = 600
+        self.timing = 400
         self.time = 0
 
     def get_input(self):
