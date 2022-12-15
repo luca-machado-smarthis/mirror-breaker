@@ -7,8 +7,8 @@ from level_select import LevelSelect
 
 class Game:
     def __init__(self):
-
-        self.max_level = 0 #Começa do level 1/'0'
+ 
+        self.max_level = 10 #Começa do level 1/'0'
         self.create_menu(self.max_level) 
         
     def create_level(self, level):
