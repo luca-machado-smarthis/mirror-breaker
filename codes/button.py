@@ -32,11 +32,14 @@ class Button(pygame.sprite.Sprite):
     def update(self):
         if self.collision_mice():
             self.image = self.image_full
+            self.rect = self.image.get_rect(topleft = (self.position[0] -30, self.position[1] -15))
             if self.get_click():
-                self.click = False  # So quero que posso ser clicado uma vez mesmo, todo botao que é clicado faz movimentacao de janela
-                if self.info is None:
+                self.click = False #So quero que posso ser clicado uma vez mesmo, todo botao que é clicado faz movimentacao de janela
+                if self.info == None:
                     self.action()
                 else:
                     self.action(self.info)
         else:
             self.image = self.image_fade
+            self.rect = self.image.get_rect(topleft = self.position)
+
