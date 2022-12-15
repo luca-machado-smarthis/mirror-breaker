@@ -114,18 +114,27 @@ level_map7 = [ #possiveis ajustes
     'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 ]
 
+level_map8 = [ #possiveis ajustes
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                          xxxxxx',
+    'xxxx                                                              Fxxx',
+    'xxxx M  S FF     Fw  GS  wFw SS  SS  SS   SS G   G w    xxxx   M Fxxx',
+    'xxxx  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx            Fxxx',
+    'xxxx                                                  w G     wFxxxxx',
+    'xxxx                                                    Fxxxxxx  xxxx',
+    'xxxx                            w  G w          xxxxxxxx         xxxx',
+    'xxxx                            SFxxx     S  S                   xxxx',
+    'xxxx                        xxxxx        xxxxxx                  xxxx',
+    'xxxx                P      SF                                    xxxx',
+    'xxxx            SFxxx   xxxxx                                    xxxx',
+    'xxxxE X    G WxxxxxxxSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSxxxx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+]
+
 tile_size = 56
 screen_width = 1200
 screen_height = 12 * tile_size #numeros de linhas totais em todos as fases
 
-level_maps = [level_map1, level_map2, level_map3, level_map4, level_map5, level_map6, level_map7, level_map1]
-firebreathers_orientations = [['r','l','r','l','r','l','r','l'],
-['r','l','r','l','r','l','r','l'],
-['r','l','r','l','r','l','r','l'],
-['r','l','r','l','r','l','r','l'],
-['r'],
-['r','l','r','l','r','l','r','l'],
-['r','r','l','r','r','l','r','l'],
-['r','l','r','l','r','l','r','l']]
+level_maps = [level_map1, level_map2,level_map3,level_map4,level_map5,level_map6,level_map7,level_map8] #Botei o mapa um no level2 so para testar o level_select
+firebreathers_orientations = [[],[],[],[],['r'],['r','l','r','l','r','l','r','l'],['r','r','l','r','r','l','r','l'],['l','l','r','r','l','l','l','l','l','l','l','l']]
 
-timer_maps = [10000,15000,20000,20000,16000,15000,25000,0]#tempo em milisegundos
+timer_maps = [10000,15000,20000,20000,20000,15000,35000,50000]#tempo em milisegundos
