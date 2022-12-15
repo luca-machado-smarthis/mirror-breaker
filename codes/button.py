@@ -2,7 +2,7 @@ import pygame
 
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self, image_fade, image_full, position, action, info = None):
+    def __init__(self, image_fade, image_full, position, action, info = None, menu= True):
         super().__init__()
         
         self.image_full = pygame.image.load(image_full).convert_alpha()
@@ -11,9 +11,11 @@ class Button(pygame.sprite.Sprite):
 
         self.action = action
         self.info = info
+        self.position = position
 
-        self.rect = self.image.get_rect(topleft = position)
+        self.rect = self.image.get_rect(topleft = self.position)
 
+        self.menu = menu
         self.click = True
 
         
@@ -32,11 +34,15 @@ class Button(pygame.sprite.Sprite):
     def update(self):
         if self.collision_mice():
             self.image = self.image_full
+            if self.menu:
+                self.rect = self.image.get_rect(topleft = (self.position[0] -30, self.position[1] -15))
             if self.get_click():
-                self.click = False  # So quero que posso ser clicado uma vez mesmo, todo botao que é clicado faz movimentacao de janela
-                if self.info is None:
+                self.click = False #So quero que posso ser clicado uma vez mesmo, todo botao que é clicado faz movimentacao de janela
+                if self.info == None:
                     self.action()
                 else:
                     self.action(self.info)
         else:
             self.image = self.image_fade
+            self.rect = self.image.get_rect(topleft = self.position)
+

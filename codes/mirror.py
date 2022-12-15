@@ -7,10 +7,14 @@ class Mirror(pygame.sprite.Sprite):
         self.image_broken = pygame.image.load('assets/mirrorBroken_test.png').convert_alpha()
         self.rect = self.image.get_rect(topleft=(pos[0], pos[1] + 10))
         self.status = True #Ta inteiro
+      
 
     def change_image_broken(self):
       self.image = self.image_broken
+      pygame.mixer.Channel(0).set_volume(0.3)
+      pygame.mixer.Channel(0).play(pygame.mixer.Sound('assets/music/break.ogg'))
       self.status = False #Foi quebrado
+
 
     def update(self, x_shift):
       self.rect.x += x_shift

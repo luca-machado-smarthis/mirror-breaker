@@ -36,7 +36,7 @@ class LevelSelect():
             self.create_menu(self.max_level)
 
     def run(self):
-        self.display_surface.blit(self.background,(0,0))
+        self.display_surface.blit(self.background,(-105,0))
         self.buttons.draw(self.display_surface)
         self.buttons.update()
         self.input_return()

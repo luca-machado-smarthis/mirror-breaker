@@ -97,7 +97,7 @@ class Player(pygame.sprite.Sprite):
 
     def wall_jump(self):
         self.direction.x = self.wall_jump_direction
-        self.direction.y = self.jump_speed * self.gravity
+        self.direction.y = self.jump_speed * 0.6
     
     def aggresion(self, time):
         if self.attack and self.timing <= 300 :
