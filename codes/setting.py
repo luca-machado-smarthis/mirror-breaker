@@ -115,7 +115,7 @@ level_map7 = [ #possiveis ajustes
 ]
 
 level_map8 = [ #possiveis ajustes
-    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                          xxxxxx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
     'xxxx                                                              Fxxx',
     'xxxx M  S FF     Fw  GS  wFw SS  SS  SS   SS G   G w    xxxx   M Fxxx',
     'xxxx  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx            Fxxx',
