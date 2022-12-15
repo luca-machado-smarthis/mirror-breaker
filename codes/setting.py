@@ -118,7 +118,7 @@ tile_size = 56
 screen_width = 1200
 screen_height = 12 * tile_size #numeros de linhas totais em todos as fases
 
-level_maps = [level_map7, level_map2,level_map3,level_map4,level_map5,level_map6,level_map7,level_map1,level_map1,level_map1,level_map1,level_map1] #Botei o mapa um no level2 so para testar o level_select
-firebreathers_orientations = [[],[],[],[],['r'],['r','l','r','l','r','l','r','l'],['r','r','l','r','r','l','r','l'],[],[],[],[],[]]
+level_maps = [level_map6, level_map2,level_map3,level_map4,level_map5,level_map6,level_map7,level_map1,level_map1,level_map1,level_map1,level_map1] #Botei o mapa um no level2 so para testar o level_select
+firebreathers_orientations = [['r','l','r','l','r','l','r','l'],[['r','l','r','l','r','l','r','l'],[['r','l','r','l','r','l','r','l'],[['r','l','r','l','r','l','r','l'],['r'],['r','l','r','l','r','l','r','l'],['r','r','l','r','r','l','r','l'],[],[],[],[],[]]
 
-timer_maps = [2000000,15000,20000,20000,16000,15000,0,0,0,0,0,0,0]#tempo em milisegundos
+timer_maps = [50000,15000,20000,20000,16000,15000,0,0,0,0,0,0,0]#tempo em milisegundos
