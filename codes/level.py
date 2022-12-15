@@ -140,14 +140,14 @@ class Level:
         player_x = player.rect.centerx
         direction_x = player.direction.x
         if player_x < screen_width/5 and direction_x < 0:
-            self.world_shift = 8
+            self.world_shift = player.stored_speed
             player.speed = 0
         elif player_x > screen_width*4/5 and direction_x > 0:
-            self.world_shift = -8
+            self.world_shift = -player.stored_speed
             player.speed = 0
         else:
             self.world_shift = 0
-            player.speed = 8
+            player.speed = player.stored_speed
 
     def vertical_movement_collision(self):
         player = self.player.sprite
@@ -170,7 +170,7 @@ class Level:
     def horizontal_movement_collision(self):
         player = self.player.sprite
         player.rect.x += player.direction.x * player.speed
-        player.gravity = 0.8
+        player.gravity = player.stored_gravity
         player.can_wall_jump = False
         for sprite in self.tiles.sprites():  # todo consertar walljump após saber usar temporizador
             if sprite.rect.colliderect(player.rect):

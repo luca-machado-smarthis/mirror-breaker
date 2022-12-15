@@ -19,12 +19,18 @@ class Player(pygame.sprite.Sprite):
         # self.image_reverse = pygame.transform.flip(self.image.copy(), True, False)
 
         self.direction = pygame.math.Vector2(0, 0) # só para não ter qur criar 2 variáveis
-        self.speed = 6
+        self.stored_speed = 8  # nunca fica zero na hora de mover a camera
+        self.stored_gravity = 0.8 # nunca fica zero na hora de ver colisões
+        self.speed = 8
         self.gravity = 0.8
         self.jump_speed = - 16
         self.can_jump = True
         self.can_wall_jump = False
         self.wall_jump_direction = 0
+
+        self.dashing = False
+        self.dash_charges = 10
+        self.dash_duration = 3
 
         self.weapon = pygame.sprite.GroupSingle()
         self.weapon.add(Weapon(pos, (self.image.get_width(),self.image.get_height())))
@@ -54,6 +60,30 @@ class Player(pygame.sprite.Sprite):
         if not(self.attack) and keys[pygame.K_q] and self.click:
             self.attack = True
             self.click = False
+        if not(self.dashing) and keys[pygame.K_LSHIFT] and self.dash_charges>0:
+            self.dashing = True
+            self.dash_charges -= 1
+            #self.click = False
+            self.reset_vertical_momentum()
+            self.stored_speed = 20
+            self.speed = 15
+            self.stored_gravity = 0
+            self.gravity = 0
+            self.jump_speed = -16
+
+    def dash_cooldown(self):
+        if self.dashing:
+            self.dash_duration -= 0.1
+        if self.dash_duration<0:
+            self.dashing = False
+            self.stored_speed = 8
+            self.speed = 8
+            self.stored_gravity = 0.8
+            self.gravity = 0.8
+            self.jump_speed = -16
+            self.dash_duration = 4
+
+
 
     def apply_gravity(self):
         self.direction.y += self.gravity
@@ -80,7 +110,9 @@ class Player(pygame.sprite.Sprite):
     
     def animate(self):
         
-        if self.direction.y < 0:
+        if self.dashing: #mudar ordem depois
+            self.state = 'dash'
+        elif self.direction.y < 0:
           self.state = 'jump'
         elif self.direction.y > 0.8:
             self.state = 'fall'
@@ -104,7 +136,7 @@ class Player(pygame.sprite.Sprite):
 
     def import_character_assets(self):
         character_path = 'assets/character/'
-        self.animations = {'idle':[], 'walk':[], 'jump':[], 'fall':[]}
+        self.animations = {'idle':[], 'walk':[], 'jump':[], 'fall':[], 'dash':[]}
         for animation in self.animations.keys():
             full_path = character_path + animation
             self.animations[animation] = import_folder(full_path)
@@ -112,6 +144,7 @@ class Player(pygame.sprite.Sprite):
     def update(self,surface):
         time_passed = self.time - pygame.time.get_ticks()
         self.get_input()
+        self.dash_cooldown()
         self.animate()
         self.weapon.update((self.rect.left, self.rect.top), self.attack, self.direction.x)
         self.weapon.draw(surface)
