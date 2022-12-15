@@ -13,7 +13,7 @@ level_map1= [ #DONE 10 segundos
     'xxxx                 xxxx',
     'xxxx M      P      M xxxx',
     'xxxxxxxxxxxxxxxxxxxxxxxxx',
-    'xxxxxxxxxxxxxxxxxxxxxxxxx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxx'
 ]
 
 level_map2 = [ #done 15 SEGUNDOS    
@@ -63,7 +63,7 @@ level_map4 = [ #possiveis ajustes
     'x                                             xxxx  xx',
     'xEw  P  G    M    G       G   M     G    W    G  wM xx',
     'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 ]
 
 level_map5 = [ #DONE
@@ -79,7 +79,7 @@ level_map5 = [ #DONE
     'xxxxxx      xxxxx  w  G  w       w  G  w  xxxxx    xxxx',
     'xxx                 xxxxx         xxxxx            xxxx',
     'xxxSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSxxxx',
-    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 ]
 
 level_map6 = [ #DONE
@@ -95,7 +95,7 @@ level_map6 = [ #DONE
     'xxxxxxxxxF     Fxxxxxxxxx',
     'xxxxxxxxxx PE  xxxxxxxxxx',
     'xxxxxxxxxxxxxxxxxxxxxxxxx',
-    'xxxxxxxxxxxxxxxxxxxxxxxxx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxx'
 ]
 
 level_map7 = [ #possiveis ajustes
@@ -111,14 +111,14 @@ level_map7 = [ #possiveis ajustes
     'xxxx  xxxxxxxxxxxx      xxx     MxxxxxxxxxxxxxxxxF   Fxxxxxxxxxxxxxxxxx',
     'xxxx  xxxxxxxxxxxx  xx  xx xxxxxxxxxxxxxxxxxxxxxxF   Fxxxxxxxxx xxxxxxx',
     'xxxx                xx    MxxxxxxxxxxxxxxxxxxW G         G   GwExxxxxxx',
-    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 ]
 
 tile_size = 56
 screen_width = 1200
 screen_height = 12 * tile_size #numeros de linhas totais em todos as fases
 
-level_maps = [level_map6, level_map2,level_map3,level_map4,level_map5,level_map6,level_map7,level_map1,level_map1,level_map1,level_map1,level_map1] #Botei o mapa um no level2 so para testar o level_select
+level_maps = [level_map7,level_map2,level_map3,level_map4,level_map5,level_map6,level_map7,level_map1]
 firebreathers_orientations = [['r','l','r','l','r','l','r','l'],
 ['r','l','r','l','r','l','r','l'],
 ['r','l','r','l','r','l','r','l'],
@@ -128,4 +128,4 @@ firebreathers_orientations = [['r','l','r','l','r','l','r','l'],
 ['r','r','l','r','r','l','r','l'],
 ['r','l','r','l','r','l','r','l']]
 
-timer_maps = [2000000,15000,20000,20000,16000,15000,0,0]#tempo em milisegundos
+timer_maps = [20000,15000,20000,20000,16000,15000,0,0]#tempo em milisegundos

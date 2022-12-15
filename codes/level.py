@@ -49,7 +49,7 @@ class Level:
         self.setup_level(level_maps[level_number])
         self.ad_buttons()
         self.mirror_count_surface = self.text_font.render(
-            f'{self.mirror_broken}/{self.mirror_quant}', False, (0, 0, 255))  # Tem que vir dps do setup pelo mirror_quant
+            f'{self.mirror_broken}/{self.mirror_quant}', False, (0, 0, 255))
         self.time = timer_maps[level_number]
         self.start_time = pygame.time.get_ticks()
         self.status = 'run'
@@ -199,7 +199,7 @@ class Level:
             f'{(self.time - time_passed)/1000:.2f}', False, (0, 0, 255))
         if self.time - time_passed <= 0:
             self.status = 'loss'
-        self.display_surface.blit(self.time_surface, (1000, 50))
+        self.display_surface.blit(self.time_surface, (970, 50))
 
     def mirror_colission_weapon(self):
         player = self.player.sprite
@@ -292,11 +292,10 @@ class Level:
             self.player_movement()
             self.player.draw(self.display_surface)
             self.player.update(self.display_surface)
-            # self.player_movement()  Isso aqui depois que tava bugando as colisoes, afinal as colisoes tem que ser antes de dar draw ou update
 
             self.mirror_colission_weapon()
             self.display_timer()
-            self.display_surface.blit(self.mirror_count_surface, (100, 50))
+            self.display_surface.blit(self.mirror_count_surface, (60, 50))
             self.death()
             self.next_level()
         self.input_return()
