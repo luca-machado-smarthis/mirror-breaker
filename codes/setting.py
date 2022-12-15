@@ -1,3 +1,7 @@
+
+
+
+
 level_map1 = [ #done 15 SEGUNDOS    
     'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 
     'x                                                 xxxx',
@@ -15,7 +19,8 @@ level_map1 = [ #done 15 SEGUNDOS
 ]
 
 level_map2 = [ #DONE
-    'x                                                    ',
+    'x                                                   x',
+    'x                                                   x',
     'x                                                 xxx',
     'x                                   SS            xxx',
     'xES          SSS      S            xxxx       SS Mxxx',
@@ -47,27 +52,27 @@ level_map3 = [ #possiveis ajustes
     'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 ]
 
-level_map4 = [
-    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    'x                                                 x',
-    'x                                                 x',
-    'x                                                 x',
-    'x                                                 x',
-    'x                                                 x',
-    'x                                                 x',
-    'x                                                 x',
-    'x                                                 x',
-    'x                                                 x',
-    'x   P                                             x',
-    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+level_map4 = [ #DONE
+    'xxx                                                xxxx',
+    'xxx                                                xxxx',
+    'xxx                                                xxxx',
+    'xxx            E          S    S           M       xxxx',
+    'xxx           XXF   S     xxxxxx         S         xxxx',
+    'xxx                xxx            wG  wS xxxx      xxxx',
+    'xxx                          M     xxxxx           xxxx',
+    'xxx      M            M   w  G  w           M      xxxx',
+    'xxx  P     w  G  w         xxxxx         w   G w   xxxx',
+    'xxxxxx      xxxxx  w  G  w       w  G  w  xxxxx    xxxx',
+    'xxx                 xxxxx         xxxxx            xxxx',
+    'xxxSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSxxxx',
+    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
 ]
 
 tile_size = 56
 screen_width = 1200
-screen_height = 11 * tile_size #numeros de linhas totais em todos as fases
+screen_height = 12 * tile_size #numeros de linhas totais em todos as fases
 
-level_maps = [level_map3, level_map2,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1] #Botei o mapa um no level2 so para testar o level_select
-firebreathers_orientations = [[],[],[],[],[],[],[],[],[],[],[],[]]
+level_maps = [level_map4, level_map2,level_map3,level_map4,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1,level_map1] #Botei o mapa um no level2 so para testar o level_select
+firebreathers_orientations = [[],[],[],['r'],[],[],[],[],[],[],[],[]]
 
-timer_maps = [2000000,20000,20000,200000,200000,200000,200000,20000,200000,200000,200000,200000]#tempo em milisegundos
+timer_maps = [2000000,20000,20000,16000,0,0,0,0,0,0,0,0]#tempo em milisegundos
