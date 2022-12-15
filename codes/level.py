@@ -127,13 +127,13 @@ class Level:
 
     def ad_buttons(self):
         self.buttons_loss.add(Button('assets/button/retryButton_fade.png', 'assets/button/retryButton_full.png',
-                              (screen_width/2 - 90, 200), self.create_level, self.level_number))
+                              (screen_width/2 - 90, 200), self.create_level, self.level_number, False))
         self.buttons_loss.add(Button('assets/button/menuButton_fade.png', 'assets/button/menuButton_full.png',
-                              (screen_width/2 - 90, 350), self.create_menu, self.level_number))
+                              (screen_width/2 - 90, 350), self.create_menu, self.level_number, False))
         self.buttons_win.add(Button('assets/button/nextLevelButton_fade.png', 'assets/button/nextLevelButton_full.png',
-                             (screen_width/2 - 90, 300), self.create_level, self.level_number+1))
+                             (screen_width/2 - 90, 300), self.create_level, self.level_number+1, False))
         self.buttons_win.add(Button('assets/button/menuButton_fade.png', 'assets/button/menuButton_full.png',
-                             (screen_width/2 - 90, 450), self.create_menu, self.level_number+1))
+                             (screen_width/2 - 90, 450), self.create_menu, self.level_number+1, False))
 
     def scroll_x(self):
         player = self.player.sprite
